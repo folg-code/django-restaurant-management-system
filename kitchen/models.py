@@ -8,7 +8,7 @@ class DishType(models.Model):
         return self.name
 
 class Cook(AbstractUser):
-    years_of_experience = models.IntegerField()
+    years_of_experience = models.IntegerField(default=0)
 
 class Dish(models.Model):
     name = models.CharField(max_length=100)
