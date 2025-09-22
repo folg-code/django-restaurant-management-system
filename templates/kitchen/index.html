@@ -1,10 +1,10 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <title>$Title$</title>
-</head>
-<body>
-$END$
-</body>
-</html>
+{% extends 'base.html' %}
+
+{% block content %}
+<h1>Restaurant Stats</h1>
+<ul>
+    <li>Number of cooks: {{ num_dish }}</li>
+    <li>Number of drivers: {{ num_cook }}</li>
+    <li>Number of manufacturers: {{ num_dish_type }}</li>
+</ul>
+{% endblock %}
