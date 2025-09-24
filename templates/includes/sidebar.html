@@ -1,6 +1,16 @@
-<ul>
-    <li><a href="{% url 'kitchen:index' %}">Home page</a></li>
-    <li><a href="{% url 'kitchen:cook-list' %}">Cooks</a></li>
-    <li><a href="{% url 'kitchen:dish-list' %}">Dishes</a></li>
-    <li><a href="{% url 'kitchen:dish_type-list' %}">DishTypes</a></li>
+<ul class="sidebar-nav">
+  {%  if user.is_authenticated %}
+  <li>
+      {{ user.username }}
+  </li>
+  {% else %}
+  <li>
+     <a href="{% url "login" %}">Login</a>
+  </li>
+  {% endif %}
+  <br>
+  <li><a href="{% url 'kitchen:index' %}">Home page</a></li>
+  <li><a href="{% url 'kitchen:cook-list' %}">Cooks</a></li>
+  <li><a href="{% url 'kitchen:dish-list' %}">Dishes</a></li>
+  <li><a href="{% url 'kitchen:dish_type-list' %}">DishTypes</a></li>
 </ul>

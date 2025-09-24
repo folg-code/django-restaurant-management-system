@@ -1,13 +1,14 @@
 {% extends 'base.html' %}
 
 {% block content %}
-<h1>Restaurant Stats</h1>
-<ul>
-    <li>Number of cooks: {{ num_dish }}</li>
-    <li>Number of drivers: {{ num_cook }}</li>
-    <li>Number of manufacturers: {{ num_dish_type }}</li>
-</ul>
+    <h1>Best Restaurant in neighborhood </h1>
+    <h2>Our Stats</h2>
+    <ul>
+        <li>Number of Dish Types: {{ num_dish_type }}</li>
+        <li>Number of Dish: {{ num_dish }}</li>
+        <li>Number of Cook: {{ num_cook }}</li>
+
+    </ul>
+    <p>This is your's  {% if num_visits == 0 %} first {% else %} visit{% endif %} </p>
 {% endblock %}
 
-
-66105500
