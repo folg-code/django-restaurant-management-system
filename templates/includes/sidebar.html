@@ -1,6 +1,6 @@
 <ul>
-    <li><a href="#">Home page</a></li>
-    <li><a href="#">Cooks</a></li>
-    <li><a href="#">Dishes</a></li>
-    <li><a href="#">DishTypes</a></li>
+    <li><a href="{% url 'kitchen:index' %}">Home page</a></li>
+    <li><a href="{% url 'kitchen:cook-list' %}">Cooks</a></li>
+    <li><a href="{% url 'kitchen:dish-list' %}">Dishes</a></li>
+    <li><a href="{% url 'kitchen:dish_type-list' %}">DishTypes</a></li>
 </ul>
