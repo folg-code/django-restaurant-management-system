@@ -5,8 +5,9 @@ from kitchen.views import (
     DishListView,
     DishDetailView,
     CookListView,
-    CookDetailView
-    )
+    CookDetailView, DishCreateView, DishDeleteView, DishUpdateView, CookCreateView, CookDeleteView,
+    CookExperienceUpdateView, DishTypeUpdateView, DishTypeDeleteView, DishTypeCreateView
+)
 
 from . import views
 from .views import index
@@ -27,6 +28,21 @@ urlpatterns = [
         name="dish-detail",
     ),
     path(
+        "dishes/create/",
+        DishCreateView.as_view(),
+        name="dish-create",
+    ),
+    path(
+        "dishes/<int:pk>/delete/",
+        DishDeleteView.as_view(),
+        name="dish-delete",
+    ),
+    path(
+        "dishes/<int:pk>/update/",
+        DishUpdateView.as_view(),
+        name="dish-update",
+    ),
+    path(
         "cooks/",
         CookListView.as_view(),
         name="cook-list",
@@ -37,8 +53,36 @@ urlpatterns = [
         name="cook-detail",
     ),
     path(
+        "cooks/create/",
+        CookCreateView.as_view(),
+        name="cook-create",
+    ),
+    path(
+        "cooks/<int:pk>/delete/",
+        CookDeleteView.as_view(),
+        name="cook-delete",),
+    path(
+        "cooks/<int:pk>/update/",
+        CookExperienceUpdateView.as_view(),
+        name="cook-update",
+    ),
+    path(
         "dish_types/",
         DishTypeListView.as_view(),
         name="dish_type-list",
     ),
+    path(
+        "dish_types/create/",
+        DishTypeCreateView.as_view(),
+        name="dish_type-create",
+    ),
+    path(
+        "dish_types/<int:pk>/update/",
+        DishTypeUpdateView.as_view(),
+        name="dish_type-update",),
+    path(
+        "dish_types/<int:pk>/delete/",
+         DishTypeDeleteView.as_view(),
+         name="dish_type-delete",
+        ),
 ]

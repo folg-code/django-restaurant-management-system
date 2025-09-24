@@ -104,10 +104,10 @@ class CookDeleteView(LoginRequiredMixin, generic.DeleteView):
     success_url = reverse_lazy("kitchen:cook-list")
 
 
-class CookLicenseUpdateView(LoginRequiredMixin, generic.UpdateView):
+class CookExperienceUpdateView(LoginRequiredMixin, generic.UpdateView):
     model = User
     form_class = CookExperienceUpdateForm
-    template_name = "kitchen/cook_license_update.html"
+    template_name = "kitchen/cook_experience_update.html"
 
     def get_success_url(self):
         return reverse("kitchen:cook-detail", kwargs={"pk": self.object.pk})
