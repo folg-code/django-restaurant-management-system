@@ -7,10 +7,10 @@
       {{ dish.model }}
     </td>
     <td class="border-b whitespace-nowrap">
-      {{ dish.manufacturer.name }}
+      {{ dish.dish_type.name }}
     </td>
     <td class="border-b whitespace-nowrap text-right tabular-nums">
-      <a href="{% url 'taxi:dish-detail' dish.pk %}"
+      <a href="{% url 'kitchen:dish-detail' dish.pk %}"
          class="text-blue-600 hover:underline px-1.5 py-0.5 -m-0.5 rounded-md focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-indigo-500 focus-visible:ring-offset-2 focus-visible:ring-offset-white">
         {{ dish.id }}
       </a>

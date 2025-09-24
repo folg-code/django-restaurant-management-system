@@ -4,7 +4,7 @@
       {{ start_index|add:forloop.counter0 }}
     </td>
     <td class="border-b">
-      <a href="{% url 'taxi:cook-detail' cook.pk %}"
+      <a href="{% url 'kitchen:cook-detail' cook.pk %}"
          class="text-blue-600 hover:underline px-1.5 py-0.5 -m-0.5 rounded-md focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-indigo-500 focus-visible:ring-offset-2 focus-visible:ring-offset-white">
         {{ cook.username }}
       </a>

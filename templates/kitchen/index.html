@@ -9,6 +9,8 @@
         <li>Number of Cook: {{ num_cook }}</li>
 
     </ul>
-    <p>This is your's  {% if num_visits == 0 %} first {% else %} visit{% endif %} </p>
+    <p>You have visited this page
+        {{ num_visits }} time{{ num_visits|pluralize }}.
+    </p>
 {% endblock %}
 

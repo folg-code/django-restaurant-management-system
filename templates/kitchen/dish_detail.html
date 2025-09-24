@@ -1,17 +1,36 @@
 {% extends "base.html" %}
 
 {% block content %}
-  <h1>Dish {{ dish.id }} Information</h1>
+  <h1>
+    {{ dish.model }}
+    <a href="{% url 'kitchen:dish-delete' pk=dish.id %}" class="btn btn-danger link-to-page">
+      Delete
+    </a>
 
-  <div class="ml-3">
-    <p>Dish_type: {{ dish.manufacturer.name }} </p>
-    <h3>Cooks:</h3>
-    <ul>
-      {% for cook in dish.cooks.all %}
-        <li>{{ cook.first_name }} {{ cook.last_name }} {{ cook.years_of_expirience }}</li>
-      {% empty %}
-        <li class="text-gray-500">No cooks found</li>
-      {% endfor %}
-    </ul>
-  </div>
+    <a href="{% url 'kitchen:dish-update' pk=dish.id %}" class="btn btn-secondary link-to-page">
+      Update
+    </a>
+  </h1>
+  <p>Dish Type: ({{ dish.dish_type.name }})</p>
+
+  <h2>Cooks</h2>
+  <hr>
+  <ul>
+    {% for cook in dish.cooks.all %}
+      <li>{{ cook.username }} ({{ cook.first_name }} {{ cook.last_name }})</li>
+    {% empty %}
+      <li>No cooks assigned.</li>
+    {% endfor %}
+  </ul>
+
+  {% if user.is_authenticated %}
+    <form action="{% url 'kitchen:dish-toggle-cook' pk=dish.id %}" method="post" style="margin-top: 15px;">
+      {% csrf_token %}
+      {% if user in dish.cooks.all %}
+        <input type="submit" value="Delete me from this dish" class="btn btn-warning">
+      {% else %}
+        <input type="submit" value="Assign me to this dish" class="btn btn-success">
+      {% endif %}
+    </form>
+  {% endif %}
 {% endblock %}
