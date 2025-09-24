@@ -37,6 +37,8 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    "crispy_bootstrap5",
+    "crispy_forms",
     'kitchen',
 
 ]
@@ -68,6 +70,7 @@ TEMPLATES = [
         },
     },
 ]
+CRISPY_TEMPLATE_PACK = "bootstrap4"
 
 WSGI_APPLICATION = 'restaurant_manager.wsgi.application'
 
@@ -78,7 +81,7 @@ WSGI_APPLICATION = 'restaurant_manager.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
+        'NAME': BASE_DIR / 'restaurant_manager.sqlite3',
     }
 }
 
