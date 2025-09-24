@@ -1,0 +1,30 @@
+{% extends "base.html" %}
+
+{% block content %}
+  <h1>Dishes List</h1>
+
+  {% if dish_list %}
+    <table>
+      <thead>
+        <tr>
+          <th>Id</th>
+          <th>Name</th>
+          <th>Dish Type</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for dish in dish_list %}
+          <tr>
+            <td>
+              <a href="{% url 'kitchen:dish-detail' dish.pk %}">{{ dish.id }}</a>
+            </td>
+            <td>{{ dish.model }}</td>
+            <td>{{ dish.dish_type.name }}</td>
+          </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  {% else %}
+    <p>No dish found.</p>
+  {% endif %}
+{% endblock %}

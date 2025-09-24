@@ -1,0 +1,17 @@
+{% extends "base.html" %}
+
+{% block content %}
+  <h1>Dish {{ dish.id }} Information</h1>
+
+  <div class="ml-3">
+    <p>Dish_type: {{ dish.manufacturer.name }} </p>
+    <h3>Cooks:</h3>
+    <ul>
+      {% for cook in dish.cooks.all %}
+        <li>{{ cook.first_name }} {{ cook.last_name }} {{ cook.years_of_expirience }}</li>
+      {% empty %}
+        <li class="text-gray-500">No cooks found</li>
+      {% endfor %}
+    </ul>
+  </div>
+{% endblock %}
