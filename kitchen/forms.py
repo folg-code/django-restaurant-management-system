@@ -25,7 +25,28 @@ class CookExperienceUpdateForm(forms.ModelForm):
 class DishForm(forms.ModelForm):
     class Meta:
         model = Dish
-        fields = ("name", "dish_type", "cooks")  # include drivers field
+        fields = ("name", "description","price","dish_type", "cooks")
         widgets = {
-            "cooks": forms.CheckboxSelectMultiple(),  # <-- use checkboxes
+            "cooks": forms.CheckboxSelectMultiple(),
         }
+
+
+class CookSearchForm(forms.Form):
+    username = forms.CharField(
+        required=False,
+        widget=forms.TextInput(attrs={"placeholder": "Search by username"}),
+    )
+
+
+class DishSearchForm(forms.Form):
+    model = forms.CharField(
+        required=False,
+        widget=forms.TextInput(attrs={"placeholder": "Search by model"}),
+    )
+
+
+class DishTypeSearchForm(forms.Form):
+    name = forms.CharField(
+        required=False,
+        widget=forms.TextInput(attrs={"placeholder": "Search by name"}),
+    )
