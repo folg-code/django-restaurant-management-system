@@ -39,9 +39,9 @@ class CookSearchForm(forms.Form):
 
 
 class DishSearchForm(forms.Form):
-    model = forms.CharField(
+    name = forms.CharField(
         required=False,
-        widget=forms.TextInput(attrs={"placeholder": "Search by model"}),
+        widget=forms.TextInput(attrs={"placeholder": "Search by name"}),
     )
 
 

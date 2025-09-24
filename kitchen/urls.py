@@ -89,6 +89,10 @@ urlpatterns = [
     path(
         "dish_types/<int:pk>/delete/",
          DishTypeDeleteView.as_view(),
-         name="dish_type-delete",
+         name="dish_type-delete"
         ),
+
+    path('dishes/<int:pk>/toggle-cook/', views.toggle_assign_to_dish, name='dish-toggle-cook'),
+
+
 ]

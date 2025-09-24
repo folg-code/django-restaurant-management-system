@@ -18,7 +18,7 @@
       <tr>
         <th>ID</th>
         <th>Name</th>
-        <th>Country</th>
+
         <th>Update</th>
         <th>Delete</th>
       </tr>
@@ -31,20 +31,18 @@
           <td>
               {{ dish_type.name }}
           </td>
+
           <td>
-              {{ dish_type.country }}
+            <a href="{% url 'kitchen:dish_type-update' pk=dish_type.id %}" class="btn btn-primary">
+              Update
+            </a>
           </td>
-          <td>
-              <a href="{% url 'kitchen:dish_type-update' pk=dish_type.id %}">
-                Update
-              </a>
-            </td>
-            <td>
-              <a style="color: red"
-                href="{% url 'kitchen:dish_type-delete' pk=dish_type.id %}">
-                Delete
-              </a>
-            </td>
+           <td>
+            <form method="post" action="{% url 'kitchen:dish_type-delete' pk=dish_type.id %}">
+              {% csrf_token %}
+              <button type="submit" class="btn btn-danger">Delete</button>
+            </form>
+          </td>
         </tr>
       {% endfor %}
     </table>
