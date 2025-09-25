@@ -7,7 +7,8 @@ from kitchen.views import (
     CookListView,
     CookDetailView, DishCreateView, DishDeleteView, DishUpdateView, CookCreateView, CookDeleteView,
     CookExperienceUpdateView, DishTypeUpdateView, DishTypeDeleteView, DishTypeCreateView,
-    toggle_assign_to_dish
+    toggle_assign_to_dish, IngredientListView, IngredientCreateView, IngredientUpdateView, IngredientDeleteView,
+    OrderListView, OrderCreateView, OrderDeleteView, finance_dashboard
 )
 
 from . import views
@@ -94,5 +95,15 @@ urlpatterns = [
 
     path('dishes/<int:pk>/toggle-cook/', views.toggle_assign_to_dish, name='dish-toggle-cook'),
 
+    path("ingredients/", IngredientListView.as_view(), name="ingredient-list"),
+    path("ingredients/create/", IngredientCreateView.as_view(), name="ingredient-create"),
+    path("ingredients/<int:pk>/update/", IngredientUpdateView.as_view(), name="ingredient-update"),
+    path("ingredients/<int:pk>/delete/", IngredientDeleteView.as_view(), name="ingredient-delete"),
+
+    path("orders/", OrderListView.as_view(), name="order-list"),
+    path("orders/create/", OrderCreateView.as_view(), name="order-create"),
+    path("orders/<int:pk>/delete/", OrderDeleteView.as_view(), name="order-delete"),
+
+    path("finance/", finance_dashboard, name="finance-dashboard"),
 
 ]
