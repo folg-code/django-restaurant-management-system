@@ -104,6 +104,6 @@ urlpatterns = [
     path("orders/create/", OrderCreateView.as_view(), name="order-create"),
     path("orders/<int:pk>/delete/", OrderDeleteView.as_view(), name="order-delete"),
 
-    path("finance/", finance_dashboard, name="finance-dashboard"),
+    path("finance-dashboard/", views.finance_dashboard, name="finance_dashboard"),
 
 ]

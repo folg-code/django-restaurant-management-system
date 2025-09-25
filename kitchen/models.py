@@ -10,7 +10,7 @@ from django.utils import timezone
 
 class Cook(AbstractUser):
     years_of_experience = models.IntegerField(default=0)
-    salary = models.DecimalField(max_digits=8, decimal_places=2, default=0)
+    salary = models.DecimalField(max_digits=8, decimal_places=2, default=0, null=True, blank=True)
 
     def get_absolute_url(self):
         return reverse("kitchen:cook-detail", kwargs={"pk": self.pk})
@@ -51,7 +51,7 @@ class DishIngredient(models.Model):
     amount_required = models.FloatField(help_text="Ilość składnika potrzebna na 1 porcję")
 
     class Meta:
-        unique_together = ("dish", "ingredient")
+        unique_together = ("dish", "amount_required")
 
     def __str__(self):
         return f"{self.amount_required} of {self.ingredient.name} for {self.dish.name}"

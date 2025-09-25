@@ -60,16 +60,16 @@ class DishTypeSearchForm(forms.Form):
 class IngredientForm(forms.ModelForm):
     class Meta:
         model = Ingredient
-        fields = ["name", "stock", "purchase_date", "expiry_date"]
+        fields = ["name", "stock_amount", "purchase_date", "expiration_date"]
 
 
 class OrderForm(forms.ModelForm):
     class Meta:
         model = Order
-        fields = ["dish", "quantity"]
+        fields = []
 
 
 class DishIngredientForm(forms.ModelForm):
     class Meta:
         model = DishIngredient
-        fields = ["ingredient", "quantity"]
+        fields = ["ingredient", "amount_required"]
