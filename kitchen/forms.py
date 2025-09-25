@@ -2,7 +2,7 @@ from django import forms
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth import get_user_model
 
-from kitchen.models import Dish, DishType, Cook
+from kitchen.models import Dish, DishType, Cook, Ingredient, Order, DishIngredient
 
 User = get_user_model()
 
@@ -25,10 +25,16 @@ class CookExperienceUpdateForm(forms.ModelForm):
 class DishForm(forms.ModelForm):
     class Meta:
         model = Dish
-        fields = ("name", "description","price","dish_type", "cooks")
+        fields = ("name", "description","ingredients", "price","dish_type", "cooks")
         widgets = {
             "cooks": forms.CheckboxSelectMultiple(),
         }
+
+        ingredients = forms.ModelMultipleChoiceField(
+            queryset=Ingredient.objects.all(),
+            widget=forms.CheckboxSelectMultiple,
+            required=False,
+        )
 
 
 class CookSearchForm(forms.Form):
@@ -50,3 +56,20 @@ class DishTypeSearchForm(forms.Form):
         required=False,
         widget=forms.TextInput(attrs={"placeholder": "Search by name"}),
     )
+
+class IngredientForm(forms.ModelForm):
+    class Meta:
+        model = Ingredient
+        fields = ["name", "stock", "purchase_date", "expiry_date"]
+
+
+class OrderForm(forms.ModelForm):
+    class Meta:
+        model = Order
+        fields = ["dish", "quantity"]
+
+
+class DishIngredientForm(forms.ModelForm):
+    class Meta:
+        model = DishIngredient
+        fields = ["ingredient", "quantity"]

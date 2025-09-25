@@ -1,3 +1,5 @@
+from decimal import Decimal
+
 from django.db import models, transaction
 from django.contrib.auth.models import AbstractUser
 from django.conf import settings
@@ -85,5 +87,36 @@ class OrderItem(models.Model):
     @property
     def total_price(self):
         return self.dish.price * self.quantity
+
+
+class FinanceManager:
+    def __init__(self):
+        self.orders = Order.objects.all()
+        self.cooks = Cook.objects.all()
+
+    @property
+    def revenue(self):
+        return sum(order.total_price for order in self.orders)
+
+    @property
+    def employee_costs(self):
+        return sum(cook.salary for cook in self.cooks)
+
+    @property
+    def fixed_costs(self):
+        return Decimal("1000.00")
+
+    @property
+    def supply_costs(self):
+        total = 0
+        for order in self.orders:
+            for item in order.items.all():
+                for di in item.dish.dishingredient_set.all():
+                    total += di.amount_required * item.quantity * di.ingredient.price_per_unit
+        return total
+
+    @property
+    def profit(self):
+        return self.revenue - (self.employee_costs + self.fixed_costs + self.supply_costs)
 
 
