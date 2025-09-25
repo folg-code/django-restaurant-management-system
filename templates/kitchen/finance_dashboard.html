@@ -1,0 +1,27 @@
+{% extends "base.html" %}
+
+{% block content %}
+  <h1>Finance Dashboard</h1>
+  <table class="table table-bordered">
+    <tr>
+      <th>Total Orders</th>
+      <td>{{ total_orders }}</td>
+    </tr>
+    <tr>
+      <th>Total Revenue</th>
+      <td>{{ total_revenue }}</td>
+    </tr>
+    <tr>
+      <th>Staff Costs</th>
+      <td>{{ staff_costs }}</td>
+    </tr>
+    <tr>
+      <th>Fixed Costs</th>
+      <td>{{ fixed_costs }}</td>
+    </tr>
+    <tr>
+      <th>Profit</th>
+      <td>{{ profit }}</td>
+    </tr>
+  </table>
+{% endblock %}

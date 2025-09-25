@@ -1,0 +1,32 @@
+{% extends "base.html" %}
+{% load crispy_forms_filters %}
+
+{% block content %}
+  <h1>Orders
+    <a href="{% url 'kitchen:order-create' %}" class="btn btn-primary link-to-page">Create</a>
+  </h1>
+  {% if order_list %}
+  <table class="table">
+    <tr>
+      <th>ID</th>
+      <th>Dish</th>
+      <th>Quantity</th>
+      <th>Date</th>
+      <th>Actions</th>
+    </tr>
+    {% for order in order_list %}
+      <tr>
+        <td>{{ order.id }}</td>
+        <td>{{ order.dish.name }}</td>
+        <td>{{ order.quantity }}</td>
+        <td>{{ order.created_at }}</td>
+        <td>
+          <a href="{% url 'kitchen:order-delete' pk=order.id %}" class="btn btn-sm btn-danger">Delete</a>
+        </td>
+      </tr>
+    {% endfor %}
+  </table>
+  {% else %}
+    <p>No orders yet.</p>
+  {% endif %}
+{% endblock %}

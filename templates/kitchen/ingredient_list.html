@@ -1,0 +1,35 @@
+{% extends "base.html" %}
+{% load crispy_forms_filters %}
+
+{% block content %}
+  <h1>Ingredient list
+    <a href="{% url 'kitchen:ingredient-create' %}" class="btn btn-primary link-to-page">Create</a>
+  </h1>
+  {% if ingredient_list %}
+  <table class="table">
+    <tr>
+      <th>ID</th>
+      <th>Name</th>
+      <th>Stock</th>
+      <th>Purchase Date</th>
+      <th>Expiry Date</th>
+      <th>Actions</th>
+    </tr>
+    {% for ing in ingredient_list %}
+      <tr>
+        <td>{{ ing.id }}</td>
+        <td>{{ ing.name }}</td>
+        <td>{{ ing.stock }}</td>
+        <td>{{ ing.purchase_date }}</td>
+        <td>{{ ing.expiry_date }}</td>
+        <td>
+          <a href="{% url 'kitchen:ingredient-update' pk=ing.id %}" class="btn btn-sm btn-warning">Update</a>
+          <a href="{% url 'kitchen:ingredient-delete' pk=ing.id %}" class="btn btn-sm btn-danger">Delete</a>
+        </td>
+      </tr>
+    {% endfor %}
+  </table>
+  {% else %}
+    <p>No ingredients found.</p>
+  {% endif %}
+{% endblock %}
