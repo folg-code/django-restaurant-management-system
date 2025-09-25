@@ -3,7 +3,7 @@ from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth import get_user_model
 from django.forms import inlineformset_factory
 
-from kitchen.models import Dish, DishType, Cook, Ingredient, Order, DishIngredient
+from kitchen.models import Dish, DishType, Cook, Ingredient, Order, DishIngredient, OrderItem
 
 User = get_user_model()
 
@@ -58,10 +58,7 @@ class IngredientForm(forms.ModelForm):
         fields = ["name", "stock_amount", "purchase_date", "expiration_date"]
 
 
-class OrderForm(forms.ModelForm):
-    class Meta:
-        model = Order
-        fields = []
+
 
 
 class DishIngredientForm(forms.ModelForm):
@@ -70,10 +67,31 @@ class DishIngredientForm(forms.ModelForm):
         fields = ["ingredient", "amount_required"]
 
 
+class OrderItemForm(forms.ModelForm):
+    class Meta:
+        model = OrderItem
+        fields = ['dish', 'quantity']
+
+class OrderForm(forms.ModelForm):
+    class Meta:
+        model = Order
+        fields = []
+
+
 DishIngredientFormSet = inlineformset_factory(
     Dish,
     DishIngredient,
     fields=['ingredient', 'amount_required'],
+    extra=1,
+    can_delete=True
+)
+
+
+
+OrderItemFormSet = inlineformset_factory(
+    Order,
+    OrderItem,
+    form=OrderItemForm,
     extra=1,
     can_delete=True
 )

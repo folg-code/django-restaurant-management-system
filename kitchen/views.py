@@ -1,3 +1,4 @@
+from django.db import transaction
 from django.shortcuts import render, redirect
 from django.http import HttpResponseRedirect
 from django.views import generic
@@ -8,8 +9,8 @@ from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.auth import get_user_model
 
 from kitchen.forms import DishForm, CookCreationForm, CookExperienceUpdateForm, CookSearchForm, DishTypeSearchForm, \
-    DishSearchForm, IngredientForm, OrderForm, DishIngredientFormSet
-from kitchen.models import DishType, Cook, Dish, Ingredient, Order
+    DishSearchForm, IngredientForm, OrderForm, DishIngredientFormSet, OrderItemFormSet
+from kitchen.models import DishType, Cook, Dish, Ingredient, Order, OrderItem
 
 User = get_user_model()
 @login_required
@@ -221,15 +222,48 @@ class OrderListView(LoginRequiredMixin, generic.ListView):
     model = Order
     template_name = "kitchen/order_list.html"
     context_object_name = "order_list"
+    paginate_by = 10
 
 
 class OrderCreateView(LoginRequiredMixin, generic.CreateView):
     model = Order
     form_class = OrderForm
     template_name = "kitchen/order_form.html"
+
+    def get_context_data(self, **kwargs):
+        data = super().get_context_data(**kwargs)
+        if self.request.POST:
+            data['items'] = OrderItemFormSet(self.request.POST)
+        else:
+            data['items'] = OrderItemFormSet()
+        return data
+
+    def form_valid(self, form):
+        context = self.get_context_data()
+        items = context['items']
+
+        with transaction.atomic():
+            self.object = form.save()
+            if items.is_valid():
+                items.instance = self.object
+                items.save()
+
+                for order_item in self.object.items.all():
+                    dish = order_item.dish
+                    quantity = order_item.quantity
+                    for di in dish.dishingredient_set.all():
+                        ingredient = di.ingredient
+                        ingredient.stock_amount -= di.amount_required * quantity
+                        if ingredient.stock_amount < 0:
+                            ingredient.stock_amount = 0
+                        ingredient.save()
+        return redirect('kitchen:order-list')
+
+class OrderUpdateView(LoginRequiredMixin, generic.UpdateView):
+    model = Order
+    form_class = OrderForm
+    template_name = "kitchen/order_form.html"
     success_url = reverse_lazy("kitchen:order-list")
-
-
 class OrderDeleteView(LoginRequiredMixin, generic.DeleteView):
     model = Order
     template_name = "kitchen/order_confirm_delete.html"
