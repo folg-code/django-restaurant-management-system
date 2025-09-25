@@ -1,4 +1,4 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from django.http import HttpResponseRedirect
 from django.views import generic
 from django.urls import reverse_lazy, reverse
@@ -8,7 +8,7 @@ from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.auth import get_user_model
 
 from kitchen.forms import DishForm, CookCreationForm, CookExperienceUpdateForm, CookSearchForm, DishTypeSearchForm, \
-    DishSearchForm, IngredientForm, OrderForm
+    DishSearchForm, IngredientForm, OrderForm, DishIngredientFormSet
 from kitchen.models import DishType, Cook, Dish, Ingredient, Order
 
 User = get_user_model()
@@ -96,13 +96,51 @@ class DishDetailView(LoginRequiredMixin, generic.DetailView):
 class DishCreateView(LoginRequiredMixin, generic.CreateView):
     model = Dish
     form_class = DishForm
+    template_name = "kitchen/dish_form.html"
     success_url = reverse_lazy("kitchen:dish-list")
+
+    def get_context_data(self, **kwargs):
+        data = super().get_context_data(**kwargs)
+        if self.request.POST:
+            data["ingredients"] = DishIngredientFormSet(self.request.POST)
+        else:
+            data["ingredients"] = DishIngredientFormSet()
+        return data
+
+    def form_valid(self, form):
+        context = self.get_context_data()
+        ingredients = context["ingredients"]
+        self.object = form.save()
+        if ingredients.is_valid():
+            ingredients.instance = self.object
+            ingredients.save()
+        return super().form_valid(form)
 
 
 class DishUpdateView(LoginRequiredMixin, generic.UpdateView):
     model = Dish
     form_class = DishForm
+    template_name = 'kitchen/dish_form.html'
     success_url = reverse_lazy("kitchen:dish-list")
+
+    def get_context_data(self, **kwargs):
+        data = super().get_context_data(**kwargs)
+        if self.request.POST:
+            data['ingredients'] = DishIngredientFormSet(self.request.POST, instance=self.object)
+        else:
+            data['ingredients'] = DishIngredientFormSet(instance=self.object)
+        return data
+
+    def form_valid(self, form):
+        context = self.get_context_data()
+        ingredients = context['ingredients']
+        if form.is_valid() and ingredients.is_valid():
+            self.object = form.save()
+            ingredients.instance = self.object
+            ingredients.save()
+            return redirect(self.get_success_url())
+        else:
+            return self.form_invalid(form)
 
 
 class DishDeleteView(LoginRequiredMixin, generic.DeleteView):

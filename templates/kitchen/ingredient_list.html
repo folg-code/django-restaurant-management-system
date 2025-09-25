@@ -19,9 +19,9 @@
       <tr>
         <td>{{ ing.id }}</td>
         <td>{{ ing.name }}</td>
-        <td>{{ ing.stock }}</td>
+        <td>{{ ing.stock_amount }}</td>
         <td>{{ ing.purchase_date }}</td>
-        <td>{{ ing.expiry_date }}</td>
+        <td>{{ ing.expiration_date }}</td>
         <td>
           <a href="{% url 'kitchen:ingredient-update' pk=ing.id %}" class="btn btn-sm btn-warning">Update</a>
           <a href="{% url 'kitchen:ingredient-delete' pk=ing.id %}" class="btn btn-sm btn-danger">Delete</a>

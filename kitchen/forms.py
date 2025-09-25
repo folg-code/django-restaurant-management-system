@@ -1,6 +1,7 @@
 from django import forms
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth import get_user_model
+from django.forms import inlineformset_factory
 
 from kitchen.models import Dish, DishType, Cook, Ingredient, Order, DishIngredient
 
@@ -25,16 +26,10 @@ class CookExperienceUpdateForm(forms.ModelForm):
 class DishForm(forms.ModelForm):
     class Meta:
         model = Dish
-        fields = ("name", "description","ingredients", "price","dish_type", "cooks")
+        fields = ("name", "description", "price", "dish_type", "cooks")
         widgets = {
             "cooks": forms.CheckboxSelectMultiple(),
         }
-
-        ingredients = forms.ModelMultipleChoiceField(
-            queryset=Ingredient.objects.all(),
-            widget=forms.CheckboxSelectMultiple,
-            required=False,
-        )
 
 
 class CookSearchForm(forms.Form):
@@ -73,3 +68,12 @@ class DishIngredientForm(forms.ModelForm):
     class Meta:
         model = DishIngredient
         fields = ["ingredient", "amount_required"]
+
+
+DishIngredientFormSet = inlineformset_factory(
+    Dish,
+    DishIngredient,
+    fields=['ingredient', 'amount_required'],
+    extra=1,
+    can_delete=True
+)
