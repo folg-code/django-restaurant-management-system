@@ -91,32 +91,44 @@ class OrderItem(models.Model):
 
 class FinanceManager:
     def __init__(self):
+        self.ingredients = Ingredient.objects.all()
         self.orders = Order.objects.all()
         self.cooks = Cook.objects.all()
 
     @property
+    def supply_on_stock(self):
+        """Wartość produktów aktualnie w magazynie"""
+        total = Decimal("0.00")
+        for ingredient in self.ingredients:
+            total += Decimal(ingredient.stock_amount) * Decimal(ingredient.price_per_unit)
+        return total
+
+    @property
+    def supply_cost(self):
+        total = Decimal("0.00")
+        for order in self.orders:
+            for item in order.items.all():
+                for di in item.dish.dishingredient_set.all():
+                    amount_used = Decimal(di.amount_required) * Decimal(item.quantity)
+                    total += amount_used * Decimal(di.ingredient.price_per_unit)
+        return total
+
+    @property
     def revenue(self):
-        return sum(order.total_price for order in self.orders)
+        total = Decimal("0.00")
+        for order in self.orders:
+            total += Decimal(order.total_price)
+        return total
 
     @property
     def employee_costs(self):
-        return sum(cook.salary for cook in self.cooks)
+        return sum(Decimal(cook.salary) for cook in self.cooks)
 
     @property
     def fixed_costs(self):
         return Decimal("1000.00")
 
     @property
-    def supply_costs(self):
-        total = 0
-        for order in self.orders:
-            for item in order.items.all():
-                for di in item.dish.dishingredient_set.all():
-                    total += di.amount_required * item.quantity * di.ingredient.price_per_unit
-        return total
-
-    @property
     def profit(self):
-        return self.revenue - (self.employee_costs + self.fixed_costs + self.supply_costs)
-
+        return self.revenue - (self.employee_costs + self.fixed_costs + self.supply_cost) + self.supply_on_stock
 

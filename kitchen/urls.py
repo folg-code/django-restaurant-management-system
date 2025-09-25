@@ -6,7 +6,7 @@ from kitchen.views import (
     DishDetailView,
     CookListView,
     CookDetailView, DishCreateView, DishDeleteView, DishUpdateView, CookCreateView, CookDeleteView,
-    CookExperienceUpdateView, DishTypeUpdateView, DishTypeDeleteView, DishTypeCreateView,
+    CookUpdateView, DishTypeUpdateView, DishTypeDeleteView, DishTypeCreateView,
     toggle_assign_to_dish, IngredientListView, IngredientCreateView, IngredientUpdateView, IngredientDeleteView,
     OrderListView, OrderCreateView, OrderDeleteView, finance_dashboard, OrderUpdateView
 )
@@ -70,7 +70,7 @@ urlpatterns = [
         name="cook-delete",),
     path(
         "cooks/<int:pk>/update/",
-        CookExperienceUpdateView.as_view(),
+        CookUpdateView.as_view(),
         name="cook-update",
     ),
     path(

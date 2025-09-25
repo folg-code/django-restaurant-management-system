@@ -1,3 +1,5 @@
+from decimal import Decimal
+
 from django.db import transaction
 from django.shortcuts import render, redirect
 from django.http import HttpResponseRedirect
@@ -8,9 +10,9 @@ from django.contrib.auth.decorators import login_required
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.auth import get_user_model
 
-from kitchen.forms import DishForm, CookCreationForm, CookExperienceUpdateForm, CookSearchForm, DishTypeSearchForm, \
+from kitchen.forms import DishForm, CookCreationForm, CookUpdateForm, CookSearchForm, DishTypeSearchForm, \
     DishSearchForm, IngredientForm, OrderForm, DishIngredientFormSet, OrderItemFormSet
-from kitchen.models import DishType, Cook, Dish, Ingredient, Order, OrderItem
+from kitchen.models import DishType, Cook, Dish, Ingredient, Order, OrderItem, FinanceManager
 
 User = get_user_model()
 @login_required
@@ -183,10 +185,10 @@ class CookDeleteView(LoginRequiredMixin, generic.DeleteView):
     success_url = reverse_lazy("kitchen:cook-list")
 
 
-class CookExperienceUpdateView(LoginRequiredMixin, generic.UpdateView):
+class CookUpdateView(LoginRequiredMixin, generic.UpdateView):
     model = User
-    form_class = CookExperienceUpdateForm
-    template_name = "kitchen/cook_experience_update.html"
+    form_class = CookUpdateForm
+    template_name = "kitchen/cook_form.html"
 
     def get_success_url(self):
         return reverse("kitchen:cook-detail", kwargs={"pk": self.object.pk})
@@ -271,21 +273,17 @@ class OrderDeleteView(LoginRequiredMixin, generic.DeleteView):
 
 
 def finance_dashboard(request):
-    total_orders = Order.objects.count()
-    total_revenue = sum(order.dish.price * order.quantity for order in Order.objects.all())
+    fm = FinanceManager()
 
-    cooks = Dish.objects.all()
-
-    staff_costs = sum(cook.salary for cook in request.user.__class__.objects.all())
-
-    fixed_costs = 2000
+    print("SUPPLY ON STOCK:", fm.supply_on_stock)
 
     context = {
-        "total_orders": total_orders,
-        "total_revenue": total_revenue,
-        "staff_costs": staff_costs,
-        "fixed_costs": fixed_costs,
-        "profit": total_revenue - (staff_costs + fixed_costs),
+        "supply_on_stock": fm.supply_on_stock,
+        "supply_cost": fm.supply_cost,
+        "revenue": fm.revenue,
+        "employee_costs": fm.employee_costs,
+        "fixed_costs": fm.fixed_costs,
+        "profit": fm.profit,
     }
     return render(request, "kitchen/finance_dashboard.html", context)
 
