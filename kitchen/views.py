@@ -8,11 +8,8 @@ from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.auth import get_user_model
 
 from kitchen.forms import DishForm, CookCreationForm, CookExperienceUpdateForm, CookSearchForm, DishTypeSearchForm, \
-    DishSearchForm
-from kitchen.models import DishType, Cook, Dish
-
-
-
+    DishSearchForm, IngredientForm, OrderForm
+from kitchen.models import DishType, Cook, Dish, Ingredient, Order
 
 User = get_user_model()
 @login_required
@@ -155,6 +152,72 @@ class CookExperienceUpdateView(LoginRequiredMixin, generic.UpdateView):
     def get_success_url(self):
         return reverse("kitchen:cook-detail", kwargs={"pk": self.object.pk})
 
+
+class IngredientListView(LoginRequiredMixin, generic.ListView):
+    model = Ingredient
+    template_name = "kitchen/ingredient_list.html"
+    context_object_name = "ingredient_list"
+
+
+class IngredientCreateView(LoginRequiredMixin, generic.CreateView):
+    model = Ingredient
+    form_class = IngredientForm
+    template_name = "kitchen/ingredient_form.html"
+    success_url = reverse_lazy("kitchen:ingredient-list")
+
+
+class IngredientUpdateView(LoginRequiredMixin, generic.UpdateView):
+    model = Ingredient
+    form_class = IngredientForm
+    template_name = "kitchen/ingredient_form.html"
+    success_url = reverse_lazy("kitchen:ingredient-list")
+
+
+class IngredientDeleteView(LoginRequiredMixin, generic.DeleteView):
+    model = Ingredient
+    template_name = "kitchen/ingredient_confirm_delete.html"
+    success_url = reverse_lazy("kitchen:ingredient-list")
+
+
+class OrderListView(LoginRequiredMixin, generic.ListView):
+    model = Order
+    template_name = "kitchen/order_list.html"
+    context_object_name = "order_list"
+
+
+class OrderCreateView(LoginRequiredMixin, generic.CreateView):
+    model = Order
+    form_class = OrderForm
+    template_name = "kitchen/order_form.html"
+    success_url = reverse_lazy("kitchen:order-list")
+
+
+class OrderDeleteView(LoginRequiredMixin, generic.DeleteView):
+    model = Order
+    template_name = "kitchen/order_confirm_delete.html"
+    success_url = reverse_lazy("kitchen:order-list")
+
+
+def finance_dashboard(request):
+    total_orders = Order.objects.count()
+    total_revenue = sum(order.dish.price * order.quantity for order in Order.objects.all())
+
+    cooks = Dish.objects.all()
+
+    staff_costs = sum(cook.salary for cook in request.user.__class__.objects.all())
+
+    fixed_costs = 2000
+
+    context = {
+        "total_orders": total_orders,
+        "total_revenue": total_revenue,
+        "staff_costs": staff_costs,
+        "fixed_costs": fixed_costs,
+        "profit": total_revenue - (staff_costs + fixed_costs),
+    }
+    return render(request, "kitchen/finance_dashboard.html", context)
+
+
 @login_required
 def toggle_assign_to_dish(request, pk):
     cook = Cook.objects.get(id=request.user.id)
@@ -165,3 +228,4 @@ def toggle_assign_to_dish(request, pk):
     else:
         cook.dishes.add(pk)
     return HttpResponseRedirect(reverse_lazy("kitchen:dish-detail", args=[pk]))
+
