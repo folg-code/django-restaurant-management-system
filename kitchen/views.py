@@ -268,6 +268,36 @@ class OrderUpdateView(LoginRequiredMixin, generic.UpdateView):
     form_class = OrderForm
     template_name = "kitchen/order_form.html"
     success_url = reverse_lazy("kitchen:order-list")
+
+    def get_context_data(self, **kwargs):
+        data = super().get_context_data(**kwargs)
+        if self.request.POST:
+            data['items'] = OrderItemFormSet(self.request.POST, instance=self.object)
+        else:
+            data['items'] = OrderItemFormSet(instance=self.object)
+        return data
+
+    def form_valid(self, form):
+        context = self.get_context_data()
+        items = context['items']
+
+        with transaction.atomic():
+            self.object = form.save()
+            if items.is_valid():
+                items.instance = self.object
+                items.save()
+
+                for order_item in self.object.items.all():
+                    dish = order_item.dish
+                    quantity = order_item.quantity
+                    for di in dish.dishingredient_set.all():
+                        ingredient = di.ingredient
+                        ingredient.stock_amount -= di.amount_required * quantity
+                        if ingredient.stock_amount < 0:
+                            ingredient.stock_amount = 0
+                        ingredient.save()
+
+        return redirect(self.success_url)
 class OrderDeleteView(LoginRequiredMixin, generic.DeleteView):
     model = Order
     template_name = "kitchen/order_confirm_delete.html"

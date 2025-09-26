@@ -1,42 +1,43 @@
-{% extends "base.html" %}
+{% extends 'layouts/base-presentation.html' %}
 {% load crispy_forms_filters %}
+
 {% block content %}
-<h1>{{ object|yesno:"Update,Create" }} Create Order</h1>
+  <div class="container mt-8">
+    <h1>{{ object|yesno:"Update,Create" }} Order</h1>
+    <form method="post">
+        {% csrf_token %}
+        {{ form|crispy }}
 
-<form method="post">
-    {% csrf_token %}
-    {{ form|crispy }}
-
-    <h3>Dishes</h3>
-    {{ items.management_form }}
-    <div id="order-items">
-        {% for item_form in items %}
-        <div class="form-row mb-2">
-            {{ item_form.dish.label_tag }} {{ item_form.dish }}
-            {{ item_form.quantity.label_tag }} {{ item_form.quantity }}
-            {% if item_form.DELETE %}
-                {{ item_form.DELETE }} Delete
-            {% endif %}
+        {{ items.management_form }}
+        <div id="order-items">
+            {% for item_form in items %}
+            <div class="form-row mb-2">
+                {{ item_form.dish.label_tag }} {{ item_form.dish }}
+                {{ item_form.quantity.label_tag }} {{ item_form.quantity }}
+                {% if item_form.DELETE %}
+                    {{ item_form.DELETE }} Delete
+                {% endif %}
+            </div>
+            {% endfor %}
         </div>
-        {% endfor %}
-    </div>
 
-    <button type="button" id="add-item" class="btn btn-secondary mb-3">Add another dish</button>
-    <input type="submit" class="btn btn-primary" value="Submit">
-</form>
+        <button type="button" id="add-item" class="btn btn-secondary mb-3">Add another dish</button>
+        <input type="submit" class="btn btn-primary" value="Submit">
+    </form>
 
-<script>
-const addBtn = document.getElementById('add-item');
-const formContainer = document.getElementById('order-items');
-let totalForms = document.querySelector('#id_orderitem_set-TOTAL_FORMS');
+    <script>
+    const addBtn = document.getElementById('add-item');
+    const formContainer = document.getElementById('order-items');
+    let totalForms = document.querySelector('#id_orderitem_set-TOTAL_FORMS');
 
-addBtn.addEventListener('click', () => {
-    const currentCount = parseInt(totalForms.value);
-    const newForm = formContainer.children[0].cloneNode(true);
-    newForm.querySelectorAll('input, select').forEach(i => { if(i.type !== 'hidden') i.value = ''; });
-    newForm.innerHTML = newForm.innerHTML.replace(/-0-/g, `-${currentCount}-`);
-    formContainer.appendChild(newForm);
-    totalForms.value = currentCount + 1;
-});
-</script>
+    addBtn.addEventListener('click', () => {
+        const currentCount = parseInt(totalForms.value);
+        const newForm = formContainer.children[0].cloneNode(true);
+        newForm.querySelectorAll('input, select').forEach(i => { if(i.type !== 'hidden') i.value = ''; });
+        newForm.innerHTML = newForm.innerHTML.replace(/-0-/g, `-${currentCount}-`);
+        formContainer.appendChild(newForm);
+        totalForms.value = currentCount + 1;
+    });
+    </script>
+  </div>
 {% endblock %}

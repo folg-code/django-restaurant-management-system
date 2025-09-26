@@ -1,6 +1,8 @@
-{% extends "base.html" %}
+{% extends 'layouts/base-presentation.html' %}
+{% load crispy_forms_filters %}
 
 {% block content %}
+  <div class="container mt-8">
   <h1>
     Username: {{ cook.username }}
     <a href="{% url 'kitchen:cook-delete' pk=cook.id %}" class="btn btn-danger link-to-page">
@@ -29,5 +31,6 @@
     {% empty %}
       <p>No dishes!</p>
     {% endfor %}
+  </div>
   </div>
 {% endblock %}

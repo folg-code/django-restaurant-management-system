@@ -1,33 +1,50 @@
-{% extends "base.html" %}
+{% extends 'layouts/base-presentation.html' %}
+{% load crispy_forms_filters %}
+
 {% block content %}
-<h1>Orders <a href="{% url 'kitchen:order-create' %}" class="btn btn-primary">Create</a></h1>
+  <div class="container mt-8">
+    <div class="d-flex justify-content-between align-items-center mb-4">
+      <h1 class="mb-0">Order List</h1>
+      <a href="{% url 'kitchen:order-create' %}" class="btn btn-primary link-to-page">
+        Create Order
+      </a>
+    </div>
 
-{% if order_list %}
-<table class="table">
-    <tr>
-        <th>ID</th>
-        <th>Date</th>
-        <th>Total Price</th>
-        <th>Actions</th>
-    </tr>
-    {% for order in order_list %}
-    <tr>
-        <td>{{ order.id }}</td>
-        <td>{{ order.created_at }}</td>
-        <td>{{ order.total_price }}</td>
-        <td>
-          {% if order.pk %}
-          <a href="{% url 'kitchen:order-update' pk=order.id %}" class="btn btn-sm btn-warning">Update</a>
-          <a href="{% url 'kitchen:order-delete' pk=order.id %}" class="btn btn-sm btn-danger">Delete</a>
-          {% else %}
-            N/A
-          {% endif %}
-        </td>
-    </tr>
-    {% endfor %}
-</table>
+    {% if order_list %}
+    <table class="table">
+        <tr>
+            <th>ID</th>
+            <th>Date</th>
+            <th>Dishes</th>
+            <th>Total Price</th>
+            <th>Actions</th>
+        </tr>
+        {% for order in order_list %}
+        <tr>
+            <td>{{ order.id }}</td>
+            <td>{{ order.created_at }}</td>
+            <td>
+              {% for dish in order.dishes.all %}
+                {{ dish.name }}{% if not forloop.last %}, {% endif %}
+              {% empty %}
+                No dishes
+              {% endfor %}
+            </td>
+            <td>{{ order.total_price }}</td>
+            <td>
+              {% if order.pk %}
+              <a href="{% url 'kitchen:order-update' pk=order.id %}" class="btn btn-sm btn-primary">Update</a>
+              <a href="{% url 'kitchen:order-delete' pk=order.id %}" class="btn btn-sm btn-danger">Delete</a>
+              {% else %}
+                N/A
+              {% endif %}
+            </td>
+        </tr>
+        {% endfor %}
+    </table>
 
-{% else %}
-<p>No orders yet.</p>
-{% endif %}
+    {% else %}
+    <p>No orders yet.</p>
+    {% endif %}
+  </div>
 {% endblock %}

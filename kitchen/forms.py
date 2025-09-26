@@ -19,7 +19,7 @@ class CookCreationForm(UserCreationForm):
 class CookUpdateForm(forms.ModelForm):
     class Meta:
         model = User
-        fields = ("years_of_experience", "salary")
+        fields = ("first_name", "last_name","years_of_experience", "salary")
 
 
 
@@ -56,9 +56,6 @@ class IngredientForm(forms.ModelForm):
     class Meta:
         model = Ingredient
         fields = ["name", "stock_amount", "price_per_unit", "purchase_date", "expiration_date"]
-
-
-
 
 
 class DishIngredientForm(forms.ModelForm):

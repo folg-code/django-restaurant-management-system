@@ -1,47 +1,49 @@
-{% extends "base.html" %}
+{% extends 'layouts/base-presentation.html' %}
 {% load crispy_forms_filters %}
 
 {% block content %}
-<h1>{{ object|yesno:"Update,Create" }} dish</h1>
+  <div class="container mt-8">
+    <h1>{{ object|yesno:"Update,Create" }} dish</h1>
 
-<form method="post">
-    {% csrf_token %}
-    {{ form|crispy }}
+    <form method="post">
+        {% csrf_token %}
+        {{ form|crispy }}
 
-    <h3>Ingredients per dish</h3>
-    {{ ingredients.management_form }}
-    <div id="ingredient-forms">
-        {% for form in ingredients %}
-            <div class="form-row mb-2">
-                {{ form.ingredient.label_tag }} {{ form.ingredient }}
-                {{ form.amount_required.label_tag }} {{ form.amount_required }}
-                {% if form.DELETE %}
-                    {{ form.DELETE }} Delete
-                {% endif %}
-            </div>
-        {% endfor %}
-    </div>
+        <h3>Ingredients per dish</h3>
+        {{ ingredients.management_form }}
+        <div id="ingredient-forms">
+            {% for form in ingredients %}
+                <div class="form-row mb-2">
+                    {{ form.ingredient.label_tag }} {{ form.ingredient }}
+                    {{ form.amount_required.label_tag }} {{ form.amount_required }}
+                    {% if form.DELETE %}
+                        {{ form.DELETE }} Delete
+                    {% endif %}
+                </div>
+            {% endfor %}
+        </div>
 
-    <button type="button" id="add-ingredient" class="btn btn-secondary mb-3">Add another ingredient</button>
-    <input type="submit" value="Submit" class="btn btn-primary">
-</form>
+        <button type="button" id="add-ingredient" class="btn btn-secondary mb-3">Add another ingredient</button>
+        <input type="submit" value="Submit" class="btn btn-primary">
+    </form>
 
-<script>
-const addBtn = document.getElementById('add-ingredient');
-const formContainer = document.getElementById('ingredient-forms');
-let totalForms = document.querySelector('#id_dishingredient_set-TOTAL_FORMS');
+    <script>
+    const addBtn = document.getElementById('add-ingredient');
+    const formContainer = document.getElementById('ingredient-forms');
+    let totalForms = document.querySelector('#id_dishingredient_set-TOTAL_FORMS');
 
-addBtn.addEventListener('click', () => {
-    const currentFormCount = parseInt(totalForms.value);
-    const newForm = formContainer.children[0].cloneNode(true);
+    addBtn.addEventListener('click', () => {
+        const currentFormCount = parseInt(totalForms.value);
+        const newForm = formContainer.children[0].cloneNode(true);
 
-    newForm.querySelectorAll('input, select').forEach(input => {
-        if (input.type !== 'hidden') input.value = '';
+        newForm.querySelectorAll('input, select').forEach(input => {
+            if (input.type !== 'hidden') input.value = '';
+        });
+
+        newForm.innerHTML = newForm.innerHTML.replace(/-0-/g, `-${currentFormCount}-`);
+        formContainer.appendChild(newForm);
+        totalForms.value = currentFormCount + 1;
     });
-
-    newForm.innerHTML = newForm.innerHTML.replace(/-0-/g, `-${currentFormCount}-`);
-    formContainer.appendChild(newForm);
-    totalForms.value = currentFormCount + 1;
-});
-</script>
+    </script>
+  </div>
 {% endblock %}

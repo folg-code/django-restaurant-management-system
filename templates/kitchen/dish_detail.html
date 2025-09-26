@@ -1,14 +1,15 @@
-{% extends "base.html" %}
+{% extends 'layouts/base-presentation.html' %}
+{% load crispy_forms_filters %}
 
 {% block content %}
+  <div class="container mt-8">
   <h1>
     {{ dish.model }}
-    <a href="{% url 'kitchen:dish-delete' pk=dish.id %}" class="btn btn-danger link-to-page">
-      Delete
-    </a>
-
     <a href="{% url 'kitchen:dish-update' pk=dish.id %}" class="btn btn-secondary link-to-page">
       Update
+    </a>
+    <a href="{% url 'kitchen:dish-delete' pk=dish.id %}" class="btn btn-danger link-to-page">
+      Delete
     </a>
   </h1>
   <p>Dish Type: ({{ dish.dish_type.name }})</p>
@@ -33,4 +34,5 @@
       {% endif %}
     </form>
   {% endif %}
+  </div>
 {% endblock %}
