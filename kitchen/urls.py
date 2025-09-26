@@ -95,13 +95,11 @@ urlpatterns = [
 
     path('dishes/<int:pk>/toggle-cook/', views.toggle_assign_to_dish, name='dish-toggle-cook'),
 
-    # Ingredients
     path('ingredients/', views.IngredientListView.as_view(), name='ingredient-list'),
     path('ingredients/add/', views.IngredientCreateView.as_view(), name='ingredient-create'),
     path('ingredients/<int:pk>/edit/', views.IngredientUpdateView.as_view(), name='ingredient-update'),
     path('ingredients/<int:pk>/delete/', views.IngredientDeleteView.as_view(), name='ingredient-delete'),
 
-    # Transactions
     path('transactions/', views.IngredientTransactionListView.as_view(), name='ingredienttransaction-list'),
     path('transactions/create/', views.IngredientTransactionCreateView.as_view(), name='ingredienttransaction-create'),
     path('transactions/<int:pk>/update/', views.IngredientTransactionUpdateView.as_view(),

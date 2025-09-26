@@ -1,57 +1,51 @@
 {% extends "layouts/base-presentation.html" %}
 {% block content %}
 <div class="container mt-4">
-    <h1>Waste Ingredient: {{ ingredient.name }} ({{ ingredient.stock_amount }} {{ ingredient.unit }})</h1>
-    <form method="post">
-      {% csrf_token %}
-      {{ formset.management_form }}
-      <table class="table table-bordered">
-          <thead>
-              <tr>
-                  <th>Waste?</th>
-                  <th>Supply Transaction ID</th>
-                  <th>Available Quantity</th>
-                  <th>Quantity to Waste</th>
-                  <th>Note</th>
-              </tr>
-          </thead>
-          <tbody>
-              {% for form in formset.forms %}
-              <tr>
-                  <td>
-                      {{ form.selected }}
-                  </td>
-
-                  <!-- Pokazujemy ID, ale w polu readonly + hidden input dla POST -->
-                  <td>
-                      <input type="text" value="{{ form.supply_transaction_id.value }}" readonly class="form-control-plaintext">
-                      {{ form.supply_transaction_id }}
-                  </td>
-
-                  <!-- Dostępna ilość tylko do wyświetlania -->
-                  <td>
-                      <input type="text" value="{{ form.available_quantity.value }}" readonly class="form-control-plaintext">
-                  </td>
-
-                  <td>
-                      {{ form.quantity }}
-                      {% if form.quantity.errors %}
-                          <div class="text-danger">{{ form.quantity.errors }}</div>
-                      {% endif %}
-                  </td>
-
-                  <td>
-                      {{ form.note }}
-                      {% if form.note.errors %}
-                          <div class="text-danger">{{ form.note.errors }}</div>
-                      {% endif %}
-                  </td>
-              </tr>
-              {% endfor %}
-          </tbody>
-      </table>
-      <button type="submit" class="btn btn-danger">Apply Waste</button>
-      <a href="{% url 'kitchen:ingredient-list' %}" class="btn btn-secondary">Cancel</a>
-    </form>
+  <h1>Waste Ingredient: {{ ingredient.name }} ({{ ingredient.stock_amount }} {{ ingredient.unit }})</h1>
+  <form method="post">
+    {% csrf_token %}
+    {{ formset.management_form }}
+    <table class="table table-bordered">
+      <thead>
+        <tr>
+          <th>Waste?</th>
+          <th>Supply Transaction ID</th>
+          <th>Available Quantity</th>
+          <th>Quantity to Waste</th>
+          <th>Note</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for form in formset.forms %}
+        <tr>
+          <td>
+            {{ form.selected }}
+          </td>
+          <td>
+            <input type="text" value="{{ form.supply_transaction_id.value }}" readonly class="form-control-plaintext">
+            {{ form.supply_transaction_id }}
+          </td>
+          <td>
+            <input type="text" value="{{ form.available_quantity.value }}" readonly class="form-control-plaintext">
+          </td>
+          <td>
+            {{ form.quantity }}
+            {% if form.quantity.errors %}
+              <div class="text-danger">{{ form.quantity.errors }}</div>
+            {% endif %}
+          </td>
+          <td>
+            {{ form.note }}
+            {% if form.note.errors %}
+              <div class="text-danger">{{ form.note.errors }}</div>
+            {% endif %}
+          </td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+    <button type="submit" class="btn btn-danger">Apply Waste</button>
+    <a href="{% url 'kitchen:ingredient-list' %}" class="btn btn-secondary">Cancel</a>
+  </form>
 </div>
 {% endblock %}

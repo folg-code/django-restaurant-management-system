@@ -96,7 +96,6 @@ class DishListView(LoginRequiredMixin, generic.ListView):
                 kwargs = {f"{field}__icontains": query} if '__' not in field else {f"{field}__icontains": query}
                 queryset = queryset.filter(**kwargs)
 
-        # Sortowanie
         sort_field = self.request.GET.get('sort', 'name')
         sort_dir = self.request.GET.get('dir', 'asc')
         allowed_sort_fields = ['name', 'price', 'dish_type__name']
@@ -190,7 +189,6 @@ class CookListView(generic.ListView):
             allowed_fields = ['username', 'email', 'years_of_experience', 'salary']
             if field in allowed_fields and query:
                 if field in ['years_of_experience', 'salary']:
-                    # numeryczne pola
                     try:
                         queryset = queryset.filter(**{f"{field}": query})
                     except ValueError:
@@ -198,7 +196,6 @@ class CookListView(generic.ListView):
                 else:
                     queryset = queryset.filter(**{f"{field}__icontains": query})
 
-        # Sortowanie
         sort_field = self.request.GET.get('sort', 'username')
         sort_dir = self.request.GET.get('dir', 'asc')
         allowed_sort_fields = ['username', 'email', 'years_of_experience', 'salary', 'id']
@@ -324,7 +321,6 @@ class IngredientTransactionListView(generic.ListView):
                 except ValueError:
                     queryset = queryset.none()
 
-        # Sortowanie
         sort_field = self.request.GET.get('sort', 'created_at')
         sort_dir = self.request.GET.get('dir', 'asc')
         allowed_sort_fields = ['ingredient', 'transaction_type', 'created_at', 'quantity', 'price_per_unit', 'id']
@@ -445,7 +441,6 @@ class OrderListView(generic.ListView):
 
         self.form = OrderSearchForm(self.request.GET)
 
-        # Filtrowanie
         if self.form.is_valid():
             field = self.form.cleaned_data.get('field') or 'id'
             query = self.form.cleaned_data.get('query', '')
@@ -455,17 +450,15 @@ class OrderListView(generic.ListView):
             elif field == 'created_at' and query:
                 queryset = queryset.filter(created_at__date=query)
 
-        # Konwertujemy na listę, żeby sortować po total_price w Pythonie
+
         orders = list(queryset)
 
-        # Sortowanie
         sort_field = self.request.GET.get('sort', 'id')
         sort_dir = self.request.GET.get('dir', 'asc')
 
         if sort_field == 'total_price':
             orders.sort(key=lambda o: o.total_price, reverse=(sort_dir == 'desc'))
         else:
-            # sortowanie po polach w modelu
             allowed_sort_fields = ['id', 'created_at']
             if sort_field in allowed_sort_fields:
                 orders.sort(key=lambda o: getattr(o, sort_field), reverse=(sort_dir == 'desc'))
@@ -497,7 +490,7 @@ class OrderCreateView(LoginRequiredMixin, generic.CreateView):
         context = self.get_context_data()
         items = context['items']
 
-        # Sprawdzenie, czy wszystkie składniki są dostępne
+
         if items.is_valid():
             out_of_stock = []
             for order_item_form in items:
@@ -510,11 +503,11 @@ class OrderCreateView(LoginRequiredMixin, generic.CreateView):
                             out_of_stock.append(ingredient.name)
 
             if out_of_stock:
-                # Pokazanie komunikatu i ponowne wyświetlenie formularza
+
                 messages.error(self.request, f"Ingredient(s) out of stock: {', '.join(out_of_stock)}")
                 return self.render_to_response(self.get_context_data(form=form))
 
-            # Jeśli wszystkie składniki dostępne, zapisujemy zamówienie
+
             with transaction.atomic():
                 self.object = form.save()
                 items.instance = self.object
@@ -530,7 +523,6 @@ class OrderCreateView(LoginRequiredMixin, generic.CreateView):
 
             return redirect('kitchen:order-list')
 
-        # Jeśli formularze nie są poprawne
         return self.form_invalid(form)
 
 class OrderUpdateView(LoginRequiredMixin, generic.UpdateView):
