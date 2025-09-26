@@ -37,11 +37,11 @@
               Update
             </a>
           </td>
-           <td>
-            <form method="post" action="{% url 'kitchen:dish_type-delete' pk=dish_type.id %}">
-              {% csrf_token %}
-              <button type="submit" class="btn btn-danger">Delete</button>
-            </form>
+          <td>
+            <a style="color: red"
+              href="{% url 'kitchen:dish_type-delete' pk=dish_type.id %}">
+              Delete
+            </a>
           </td>
         </tr>
       {% endfor %}

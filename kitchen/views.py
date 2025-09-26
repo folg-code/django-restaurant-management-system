@@ -1,9 +1,11 @@
 from decimal import Decimal
 
+from django import forms
 from django.db import transaction
-from django.shortcuts import render, redirect
+from django.forms import formset_factory, modelformset_factory
+from django.shortcuts import render, redirect, get_object_or_404
 from django.http import HttpResponseRedirect
-from django.views import generic
+from django.views import generic, View
 from django.urls import reverse_lazy, reverse
 
 from django.contrib.auth.decorators import login_required
@@ -11,8 +13,9 @@ from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.auth import get_user_model
 
 from kitchen.forms import DishForm, CookCreationForm, CookUpdateForm, CookSearchForm, DishTypeSearchForm, \
-    DishSearchForm, IngredientForm, OrderForm, DishIngredientFormSet, OrderItemFormSet
-from kitchen.models import DishType, Cook, Dish, Ingredient, Order, OrderItem, FinanceManager
+    DishSearchForm, IngredientForm, OrderForm, DishIngredientFormSet, OrderItemFormSet, IngredientTransactionForm, \
+    IngredientWasteForm
+from kitchen.models import DishType, Cook, Dish, Ingredient, Order, OrderItem, FinanceManager, IngredientTransaction
 
 User = get_user_model()
 @login_required
@@ -196,30 +199,119 @@ class CookUpdateView(LoginRequiredMixin, generic.UpdateView):
         return reverse("kitchen:cook-detail", kwargs={"pk": self.object.pk})
 
 
-class IngredientListView(LoginRequiredMixin, generic.ListView):
+class IngredientListView(generic.ListView):
     model = Ingredient
     template_name = "kitchen/ingredient_list.html"
     context_object_name = "ingredient_list"
 
-
-class IngredientCreateView(LoginRequiredMixin, generic.CreateView):
+class IngredientCreateView(generic.CreateView):
     model = Ingredient
     form_class = IngredientForm
     template_name = "kitchen/ingredient_form.html"
     success_url = reverse_lazy("kitchen:ingredient-list")
 
-
-class IngredientUpdateView(LoginRequiredMixin, generic.UpdateView):
+class IngredientUpdateView(generic.UpdateView):
     model = Ingredient
     form_class = IngredientForm
     template_name = "kitchen/ingredient_form.html"
     success_url = reverse_lazy("kitchen:ingredient-list")
 
-
-class IngredientDeleteView(LoginRequiredMixin, generic.DeleteView):
+class IngredientDeleteView(generic.DeleteView):
     model = Ingredient
     template_name = "kitchen/ingredient_confirm_delete.html"
     success_url = reverse_lazy("kitchen:ingredient-list")
+
+
+class IngredientTransactionListView(generic.ListView):
+    model = IngredientTransaction
+    template_name = "kitchen/ingredienttransaction_list.html"
+    context_object_name = "transaction_list"
+    paginate_by = 10
+
+class IngredientTransactionCreateView(generic.CreateView):
+    model = IngredientTransaction
+    form_class = IngredientTransactionForm
+    template_name = "kitchen/ingredienttransaction_form.html"
+    success_url = reverse_lazy("kitchen:ingredienttransaction-list")
+
+    def get_initial(self):
+        initial = super().get_initial()
+
+        initial['transaction_type'] = IngredientTransaction.SUPPLY
+        return initial
+
+    def get_form(self, form_class=None):
+        form = super().get_form(form_class)
+        form.fields['transaction_type'].widget = forms.HiddenInput()
+        return form
+
+
+class IngredientWasteCreateView(View):
+    template_name = "kitchen/ingredienttransaction_waste_form.html"
+
+    def get(self, request, *args, **kwargs):
+        supply_transaction = get_object_or_404(
+            IngredientTransaction,
+            pk=kwargs['pk'],
+            transaction_type=IngredientTransaction.SUPPLY
+        )
+        ingredient = supply_transaction.ingredient
+
+        supply_qs = ingredient.transactions.filter(transaction_type=IngredientTransaction.SUPPLY, quantity__gt=0)
+        WasteFormSet = formset_factory(IngredientWasteForm, extra=0)
+        formset = WasteFormSet(
+            initial=[{'supply_transaction_id': tx.pk, 'available_quantity': tx.quantity} for tx in supply_qs]
+        )
+
+        for form, tx in zip(formset.forms, supply_qs):
+            form.supply_instance = tx
+
+        return render(request, self.template_name, {'formset': formset, 'ingredient': ingredient})
+
+    def post(self, request, *args, **kwargs):
+        print("POST data:", request.POST)
+        supply_transaction = get_object_or_404(
+            IngredientTransaction,
+            pk=kwargs['pk'],
+            transaction_type=IngredientTransaction.SUPPLY
+        )
+        ingredient = supply_transaction.ingredient
+        supply_qs = ingredient.transactions.filter(transaction_type=IngredientTransaction.SUPPLY, quantity__gt=0)
+        WasteFormSet = formset_factory(IngredientWasteForm, extra=0)
+        formset = WasteFormSet(request.POST)
+
+        if formset.is_valid():
+            for form, tx in zip(formset.forms, supply_qs):
+                qty = form.cleaned_data.get('quantity', 0)
+                if qty > 0:
+                    note_value = form.cleaned_data.get('note')
+                    if not note_value:
+                        note_value = f"Waste from supply transaction #{tx.pk}"
+                    waste_tx = IngredientTransaction.objects.create(
+                        ingredient=ingredient,
+                        transaction_type=IngredientTransaction.WASTE,
+                        quantity=qty,
+                        note=note_value
+                    )
+            return redirect('kitchen:ingredienttransaction-list')
+        return render(
+            request,
+            self.template_name,
+            {
+                'formset': formset,
+                'ingredient': ingredient
+            }
+        )
+class IngredientTransactionUpdateView(generic.UpdateView):
+    model = IngredientTransaction
+    form_class = IngredientTransactionForm
+    template_name = "kitchen/ingredienttransaction_form.html"
+    success_url = reverse_lazy("kitchen:ingredienttransaction-list")
+
+class IngredientTransactionDeleteView(generic.DeleteView):
+    model = IngredientTransaction
+    template_name = "kitchen/ingredienttransaction_confirm_delete.html"
+    success_url = reverse_lazy("kitchen:ingredienttransaction-list")
 
 
 class OrderListView(LoginRequiredMixin, generic.ListView):
@@ -315,7 +407,8 @@ def finance_dashboard(request):
         "revenue": fm.revenue,
         "employee_costs": fm.employee_costs,
         "fixed_costs": fm.fixed_costs,
-        "profit": fm.profit,
+        "net_profit": fm.net_profit,
+        "profit_with_stock": fm.profit_with_stock,
     }
     return render(request, "kitchen/finance_dashboard.html", context)
 

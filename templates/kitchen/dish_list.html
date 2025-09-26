@@ -21,6 +21,7 @@
       <th>Dish Type</th>
       <th>Ingredients</th>
       <th>Price</th>
+      <th>Actions</th>
     </tr>
     {% for dish in dish_list %}
       <tr>
@@ -42,6 +43,10 @@
       </td>
       <td>
         {{ dish.price }}
+      </td>
+      <td>
+        <a href="{% url 'kitchen:dish-update' pk=dish.id %}" class="btn btn-sm btn-primary">Update</a>
+        <a href="{% url 'kitchen:dish-delete' pk=dish.id %}" class="btn btn-sm btn-danger">Delete</a>
       </td>
     </tr>
 

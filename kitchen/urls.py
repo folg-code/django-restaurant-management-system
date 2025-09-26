@@ -95,10 +95,23 @@ urlpatterns = [
 
     path('dishes/<int:pk>/toggle-cook/', views.toggle_assign_to_dish, name='dish-toggle-cook'),
 
-    path("ingredients/", IngredientListView.as_view(), name="ingredient-list"),
-    path("ingredients/create/", IngredientCreateView.as_view(), name="ingredient-create"),
-    path("ingredients/<int:pk>/update/", IngredientUpdateView.as_view(), name="ingredient-update"),
-    path("ingredients/<int:pk>/delete/", IngredientDeleteView.as_view(), name="ingredient-delete"),
+    # Ingredients
+    path('ingredients/', views.IngredientListView.as_view(), name='ingredient-list'),
+    path('ingredients/add/', views.IngredientCreateView.as_view(), name='ingredient-create'),
+    path('ingredients/<int:pk>/edit/', views.IngredientUpdateView.as_view(), name='ingredient-update'),
+    path('ingredients/<int:pk>/delete/', views.IngredientDeleteView.as_view(), name='ingredient-delete'),
+
+    # Transactions
+    path('transactions/', views.IngredientTransactionListView.as_view(), name='ingredienttransaction-list'),
+    path('transactions/create/', views.IngredientTransactionCreateView.as_view(), name='ingredienttransaction-create'),
+    path('transactions/<int:pk>/update/', views.IngredientTransactionUpdateView.as_view(),
+         name='ingredienttransaction-update'),
+
+    path('transactions/<int:pk>/waste/',
+     views.IngredientWasteCreateView.as_view(),
+     name='ingredienttransaction-waste'),
+    path('transactions/<int:pk>/delete/', views.IngredientTransactionDeleteView.as_view(),
+         name='ingredienttransaction-delete'),
 
     path("orders/", OrderListView.as_view(), name="order-list"),
     path("orders/create/", OrderCreateView.as_view(), name="order-create"),

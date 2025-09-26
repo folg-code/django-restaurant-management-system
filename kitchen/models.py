@@ -3,6 +3,7 @@ from decimal import Decimal
 from django.db import models, transaction
 from django.contrib.auth.models import AbstractUser
 from django.conf import settings
+from django.db.models import Prefetch
 from django.urls import reverse
 
 from django.utils import timezone
@@ -22,14 +23,84 @@ class DishType(models.Model):
 
 class Ingredient(models.Model):
     name = models.CharField(max_length=100, unique=True)
-    stock_amount = models.FloatField(help_text="Ilość w magazynie (np. kg, litry, szt.)")
-    price_per_unit = models.DecimalField(max_digits=6, decimal_places=2, default=0)
-    purchase_date = models.DateField(default=timezone.now)
-    expiration_date = models.DateField()
+    unit = models.CharField(max_length=20, default="kg", help_text="Unit e.g., kg, l, pcs")
+    stock_amount = models.FloatField(default=0, help_text="Current stock")
+
+    @property
+    def price_per_unit(self):
+
+        purchases = self.transactions.filter(transaction_type=IngredientTransaction.SUPPLY)
+        total_qty = sum(t.quantity for t in purchases)
+        if total_qty == 0:
+            return Decimal("0.00")
+        total_cost = sum(Decimal(t.quantity) * Decimal(t.price_per_unit) for t in purchases)
+        return total_cost / Decimal(total_qty)
 
     def __str__(self):
-        return f"{self.name} ({self.stock_amount})"
+        return f"{self.name} ({self.stock_amount} {self.unit} {self.price_per_unit})"
 
+
+class IngredientTransaction(models.Model):
+    SUPPLY = "SUPPLY"
+    WASTE = "WASTE"
+
+
+    TRANSACTION_CHOICES = [
+        (SUPPLY, "Supply"),
+        (WASTE, "Waste"),
+
+    ]
+
+    ingredient = models.ForeignKey(
+        Ingredient,
+        on_delete=models.CASCADE,
+        related_name="transactions"
+    )
+    transaction_type = models.CharField(
+        max_length=10,
+        choices=TRANSACTION_CHOICES
+    )
+    quantity = models.FloatField()
+    price_per_unit = models.DecimalField(max_digits=6, decimal_places=2, default=0)
+    created_at = models.DateTimeField(default=timezone.now)
+    expiration_date = models.DateField(blank=True, null=True, help_text="Required for SUPPLY")
+    note = models.TextField(blank=True, null=True)
+
+    source_transactions = models.ManyToManyField(
+        'self',
+        blank=True,
+        symmetrical=False,
+        related_name='waste_used_in',
+        limit_choices_to={'transaction_type': SUPPLY}
+    )
+
+    def apply_waste(self):
+
+        if self.transaction_type != self.WASTE:
+            return
+
+        if self.quantity > self.ingredient.stock_amount:
+            raise ValueError("Cannot waste more than available stock")
+
+
+        self.ingredient.stock_amount -= self.quantity
+        self.ingredient.save(update_fields=['stock_amount'])
+
+
+    def save(self, *args, **kwargs):
+        if self.transaction_type == self.SUPPLY:
+            if not self.expiration_date:
+                raise ValueError("Expiration date is required for supply transactions")
+            self.ingredient.stock_amount += self.quantity
+            self.ingredient.save(update_fields=['stock_amount'])
+
+
+        super().save(*args, **kwargs)
+        if self.transaction_type == self.WASTE:
+            self.apply_waste()
+
+    def __str__(self):
+        return f"{self.transaction_type} {self.quantity} {self.ingredient.unit} of {self.ingredient.name}"
 
 
 
@@ -91,34 +162,44 @@ class OrderItem(models.Model):
 
 class FinanceManager:
     def __init__(self):
-        self.ingredients = Ingredient.objects.all()
-        self.orders = Order.objects.all()
+        today = timezone.now().date()
+
+        self.ingredients = Ingredient.objects.prefetch_related(
+            Prefetch(
+                'transactions',
+                queryset=IngredientTransaction.objects.filter(transaction_type=IngredientTransaction.SUPPLY),
+                to_attr='supply_transactions'
+            )
+        )
+
+        self.orders = Order.objects.prefetch_related(
+            'items__dish__dishingredient_set__ingredient'
+        )
+
         self.cooks = Cook.objects.all()
 
     @property
     def supply_on_stock(self):
-        """Wartość produktów aktualnie w magazynie"""
+
         total = Decimal("0.00")
         for ingredient in self.ingredients:
-            total += Decimal(ingredient.stock_amount) * Decimal(ingredient.price_per_unit)
+            qty = Decimal(str(ingredient.stock_amount))
+            price = ingredient.price_per_unit
+            total += qty * price
         return total
 
     @property
     def supply_cost(self):
+
         total = Decimal("0.00")
-        for order in self.orders:
-            for item in order.items.all():
-                for di in item.dish.dishingredient_set.all():
-                    amount_used = Decimal(di.amount_required) * Decimal(item.quantity)
-                    total += amount_used * Decimal(di.ingredient.price_per_unit)
+        for ingredient in self.ingredients:
+            for t in ingredient.transactions.filter(transaction_type=IngredientTransaction.SUPPLY):
+                total += Decimal(str(t.quantity)) * Decimal(str(t.price_per_unit))
         return total
 
     @property
     def revenue(self):
-        total = Decimal("0.00")
-        for order in self.orders:
-            total += Decimal(order.total_price)
-        return total
+        return sum(Decimal(order.total_price) for order in self.orders)
 
     @property
     def employee_costs(self):
@@ -129,6 +210,11 @@ class FinanceManager:
         return Decimal("1000.00")
 
     @property
-    def profit(self):
-        return self.revenue - (self.employee_costs + self.fixed_costs + self.supply_cost) + self.supply_on_stock
+    def net_profit(self):
 
+        return self.revenue - (self.employee_costs + self.fixed_costs + self.supply_cost)
+
+    @property
+    def profit_with_stock(self):
+
+        return self.net_profit + self.supply_on_stock
