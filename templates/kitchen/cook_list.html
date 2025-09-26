@@ -2,43 +2,112 @@
 {% load crispy_forms_filters %}
 
 {% block content %}
-  <div class="container mt-8">
-    <h1>
-      Cook List
-      <a href="{% url 'kitchen:cook-create' %}" class="btn btn-primary link-to-page">
-        Create
-      </a>
-    </h1>
+<div class="container mt-8">
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <h1 class="mb-0">Cook List</h1>
+        <a href="{% url 'kitchen:cook-create' %}" class="btn btn-primary link-to-page">Create Cook</a>
+    </div>
 
-    <form method="get" action="" class="form-inline">
-      {{ search_form|crispy }}
-      <input type="submit" class="btn btn-secondary" value="Search">
+    <form method="get" class="mb-3 d-flex gap-2">
+        {{ search_form.field }}
+        {{ search_form.query }}
+        <button type="submit" class="btn btn-primary">Search</button>
     </form>
 
     {% if cook_list %}
-    <table class="table">
-      <tr>
-        <th>ID</th>
-        <th>Username</th>
-        <th>First name</th>
-        <th>Last name</th>
-        <th>Salary</th>
-        <th>Experience</th>
-      </tr>
-    {% for cook in cook_list %}
-      <tr>
-        <td>{{ cook.id }}</td>
-        <td><a href="{{ cook.get_absolute_url }}">{{ cook.username }} {% if user == cook %} (Me){% endif %}</a></td>
-        <td>{{ cook.first_name }}</td>
-        <td>{{ cook.last_name }}</td>
-       <td>{{ cook.salary }}</td>
-        <td>{{ cook.years_of_experience }}</td>
-      </tr>
-    {% endfor %}
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                {# ID #}
+                <th>
+                    {% if current_sort_field == 'id' %}
+                        {% if current_sort_dir == 'asc' %}
+                            <a href="?field={{ search_form.field.value }}&query={{ search_form.query.value }}&sort=id&dir=desc">ID &#9650;</a>
+                        {% else %}
+                            <a href="?field={{ search_form.field.value }}&query={{ search_form.query.value }}&sort=id&dir=asc">ID &#9660;</a>
+                        {% endif %}
+                    {% else %}
+                        <a href="?field={{ search_form.field.value }}&query={{ search_form.query.value }}&sort=id&dir=asc">ID</a>
+                    {% endif %}
+                </th>
 
+                {# Username #}
+                <th>
+                    {% if current_sort_field == 'username' %}
+                        {% if current_sort_dir == 'asc' %}
+                            <a href="?field={{ search_form.field.value }}&query={{ search_form.query.value }}&sort=username&dir=desc">Username &#9650;</a>
+                        {% else %}
+                            <a href="?field={{ search_form.field.value }}&query={{ search_form.query.value }}&sort=username&dir=asc">Username &#9660;</a>
+                        {% endif %}
+                    {% else %}
+                        <a href="?field={{ search_form.field.value }}&query={{ search_form.query.value }}&sort=username&dir=asc">Username</a>
+                    {% endif %}
+                </th>
+
+                {# Email #}
+                <th>
+                    {% if current_sort_field == 'email' %}
+                        {% if current_sort_dir == 'asc' %}
+                            <a href="?field={{ search_form.field.value }}&query={{ search_form.query.value }}&sort=email&dir=desc">Email &#9650;</a>
+                        {% else %}
+                            <a href="?field={{ search_form.field.value }}&query={{ search_form.query.value }}&sort=email&dir=asc">Email &#9660;</a>
+                        {% endif %}
+                    {% else %}
+                        <a href="?field={{ search_form.field.value }}&query={{ search_form.query.value }}&sort=email&dir=asc">Email</a>
+                    {% endif %}
+                </th>
+
+                {# Years of Experience #}
+                <th>
+                    {% if current_sort_field == 'years_of_experience' %}
+                        {% if current_sort_dir == 'asc' %}
+                            <a href="?field={{ search_form.field.value }}&query={{ search_form.query.value }}&sort=years_of_experience&dir=desc">Experience &#9650;</a>
+                        {% else %}
+                            <a href="?field={{ search_form.field.value }}&query={{ search_form.query.value }}&sort=years_of_experience&dir=asc">Experience &#9660;</a>
+                        {% endif %}
+                    {% else %}
+                        <a href="?field={{ search_form.field.value }}&query={{ search_form.query.value }}&sort=years_of_experience&dir=asc">Experience</a>
+                    {% endif %}
+                </th>
+
+                {# Salary #}
+                <th>
+                    {% if current_sort_field == 'salary' %}
+                        {% if current_sort_dir == 'asc' %}
+                            <a href="?field={{ search_form.field.value }}&query={{ search_form.query.value }}&sort=salary&dir=desc">Salary &#9650;</a>
+                        {% else %}
+                            <a href="?field={{ search_form.field.value }}&query={{ search_form.query.value }}&sort=salary&dir=asc">Salary &#9660;</a>
+                        {% endif %}
+                    {% else %}
+                        <a href="?field={{ search_form.field.value }}&query={{ search_form.query.value }}&sort=salary&dir=asc">Salary</a>
+                    {% endif %}
+                </th>
+
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for cook in cook_list %}
+            <tr>
+                <td>{{ cook.id }}</td>
+                <td>{{ cook.username }}</td>
+                <td>{{ cook.email }}</td>
+                <td>{{ cook.years_of_experience }}</td>
+                <td>{{ cook.salary }}</td>
+                <td>
+                    <a href="{% url 'kitchen:cook-update' pk=cook.id %}" class="btn btn-sm btn-primary">Update</a>
+                    <a href="{% url 'kitchen:cook-delete' pk=cook.id %}" class="btn btn-sm btn-danger">Delete</a>
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
     </table>
+
+    <div class="pagination pagination-lg justify-content-center mt-4">
+        {% include "includes/pagination.html" %}
+    </div>
     {% else %}
-      <p>There are no cooks in the service.</p>
+        <p>There are no cooks in the kitchen.</p>
     {% endif %}
-  </div>
+</div>
 {% endblock %}

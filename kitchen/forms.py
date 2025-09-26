@@ -33,17 +33,27 @@ class DishForm(forms.ModelForm):
 
 
 class CookSearchForm(forms.Form):
-    username = forms.CharField(
-        required=False,
-        widget=forms.TextInput(attrs={"placeholder": "Search by username"}),
-    )
+    FIELD_CHOICES = [
+        ('username', 'Username'),
+        ('email', 'Email'),
+        ('years_of_experience', 'Years of Experience'),
+        ('salary', 'Salary'),
+    ]
+
+    field = forms.ChoiceField(choices=FIELD_CHOICES, required=False, label='Search by')
+    query = forms.CharField(required=False, label='Search', widget=forms.TextInput(attrs={'placeholder': 'Search...'}))
 
 
 class DishSearchForm(forms.Form):
-    name = forms.CharField(
-        required=False,
-        widget=forms.TextInput(attrs={"placeholder": "Search by name"}),
-    )
+    FIELD_CHOICES = [
+        ('name', 'Name'),
+        ('description', 'Description'),
+        ('price', 'Price'),
+        ('dish_type__name', 'Dish Type'),
+    ]
+
+    field = forms.ChoiceField(choices=FIELD_CHOICES, required=False, label='Search by')
+    query = forms.CharField(required=False, label='Search', widget=forms.TextInput(attrs={'placeholder': 'Search...'}))
 
 
 class DishTypeSearchForm(forms.Form):
@@ -55,7 +65,19 @@ class DishTypeSearchForm(forms.Form):
 class IngredientForm(forms.ModelForm):
     class Meta:
         model = Ingredient
-        fields = ["name", "unit"]
+        fields = ["name", "unit", "stock_amount"]
+
+class IngredientSearchForm(forms.Form):
+    FIELD_CHOICES = [
+        ('name', 'Name'),
+        ('unit', 'Unit'),
+        ('stock_amount', 'Stock'),
+        ('price_per_unit', 'Price/Unit'),
+        ('id', 'ID'),
+    ]
+
+    field = forms.ChoiceField(choices=FIELD_CHOICES, required=False, label='Search by')
+    query = forms.CharField(required=False, label='Search', widget=forms.TextInput(attrs={'placeholder': 'Search...'}))
 
 
 class IngredientTransactionForm(forms.ModelForm):
@@ -122,6 +144,27 @@ class OrderForm(forms.ModelForm):
     class Meta:
         model = Order
         fields = []
+
+class OrderSearchForm(forms.Form):
+    FIELD_CHOICES = [
+        ('id', 'Order ID'),
+        ('created_at', 'Created At'),
+    ]
+
+    field = forms.ChoiceField(choices=FIELD_CHOICES, required=False, label='Search by')
+    query = forms.CharField(required=False, label='Search', widget=forms.TextInput(attrs={'placeholder': 'Search...'}))
+
+
+class IngredientTransactionSearchForm(forms.Form):
+    FIELD_CHOICES = [
+        ('ingredient', 'Ingredient'),
+        ('transaction_type', 'Type'),
+        ('created_at', 'Created At'),
+        ('quantity', 'Quantity'),
+    ]
+
+    field = forms.ChoiceField(choices=FIELD_CHOICES, required=False, label='Search by')
+    query = forms.CharField(required=False, label='Search', widget=forms.TextInput(attrs={'placeholder': 'Search...'}))
 
 
 DishIngredientFormSet = inlineformset_factory(

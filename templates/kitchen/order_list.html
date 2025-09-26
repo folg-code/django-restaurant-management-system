@@ -2,49 +2,92 @@
 {% load crispy_forms_filters %}
 
 {% block content %}
-  <div class="container mt-8">
+<div class="container mt-8">
     <div class="d-flex justify-content-between align-items-center mb-4">
-      <h1 class="mb-0">Order List</h1>
-      <a href="{% url 'kitchen:order-create' %}" class="btn btn-primary link-to-page">
-        Create Order
-      </a>
+        <h1 class="mb-0">Orders</h1>
+        <a href="{% url 'kitchen:order-create' %}" class="btn btn-primary link-to-page">Create Order</a>
     </div>
 
+    <form method="get" class="mb-3 d-flex gap-2">
+        {{ search_form.field }}
+        {{ search_form.query }}
+        <button type="submit" class="btn btn-primary">Search</button>
+    </form>
+
     {% if order_list %}
-    <table class="table">
-        <tr>
-            <th>ID</th>
-            <th>Date</th>
-            <th>Dishes</th>
-            <th>Total Price</th>
-            <th>Actions</th>
-        </tr>
-        {% for order in order_list %}
-        <tr>
-            <td>{{ order.id }}</td>
-            <td>{{ order.created_at }}</td>
-            <td>
-              {% for dish in order.dishes.all %}
-                {{ dish.name }}{% if not forloop.last %}, {% endif %}
-              {% empty %}
-                No dishes
-              {% endfor %}
-            </td>
-            <td>{{ order.total_price }}</td>
-            <td>
-              {% if order.pk %}
-              <a href="{% url 'kitchen:order-update' pk=order.id %}" class="btn btn-sm btn-primary">Update</a>
-              <a href="{% url 'kitchen:order-delete' pk=order.id %}" class="btn btn-sm btn-danger">Delete</a>
-              {% else %}
-                N/A
-              {% endif %}
-            </td>
-        </tr>
-        {% endfor %}
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                {# ID #}
+                <th>
+                    {% if current_sort_field == 'id' %}
+                        {% if current_sort_dir == 'asc' %}
+                            <a href="?field={{ search_form.field.value }}&query={{ search_form.query.value }}&sort=id&dir=desc">ID &#9650;</a>
+                        {% else %}
+                            <a href="?field={{ search_form.field.value }}&query={{ search_form.query.value }}&sort=id&dir=asc">ID &#9660;</a>
+                        {% endif %}
+                    {% else %}
+                        <a href="?field={{ search_form.field.value }}&query={{ search_form.query.value }}&sort=id&dir=asc">ID</a>
+                    {% endif %}
+                </th>
+
+                {# Created At #}
+                <th>
+                    {% if current_sort_field == 'created_at' %}
+                        {% if current_sort_dir == 'asc' %}
+                            <a href="?field={{ search_form.field.value }}&query={{ search_form.query.value }}&sort=created_at&dir=desc">Created At &#9650;</a>
+                        {% else %}
+                            <a href="?field={{ search_form.field.value }}&query={{ search_form.query.value }}&sort=created_at&dir=asc">Created At &#9660;</a>
+                        {% endif %}
+                    {% else %}
+                        <a href="?field={{ search_form.field.value }}&query={{ search_form.query.value }}&sort=created_at&dir=asc">Created At</a>
+                    {% endif %}
+                </th>
+
+                {# Total Price #}
+                <th>
+                    {% if current_sort_field == 'total_price' %}
+                        {% if current_sort_dir == 'asc' %}
+                            <a href="?field={{ search_form.field.value }}&query={{ search_form.query.value }}&sort=total_price&dir=desc">Total Price &#9650;</a>
+                        {% else %}
+                            <a href="?field={{ search_form.field.value }}&query={{ search_form.query.value }}&sort=total_price&dir=asc">Total Price &#9660;</a>
+                        {% endif %}
+                    {% else %}
+                        <a href="?field={{ search_form.field.value }}&query={{ search_form.query.value }}&sort=total_price&dir=asc">Total Price</a>
+                    {% endif %}
+                </th>
+
+                <th>Dishes</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for order in order_list %}
+            <tr>
+                <td>{{ order.id }}</td>
+                <td>{{ order.created_at }}</td>
+                <td>{{ order.total_price }}</td>
+                <td>
+                    {% for item in order.items.all %}
+                        {{ item.dish.name }} x{{ item.quantity }}{% if not forloop.last %}, {% endif %}
+                    {% empty %}
+                        Brak dań
+                    {% endfor %}
+                </td>
+                <td>
+                    <a href="{% url 'kitchen:order-update' pk=order.id %}" class="btn btn-sm btn-primary">Update</a>
+                    <a href="{% url 'kitchen:order-delete' pk=order.id %}" class="btn btn-sm btn-danger">Delete</a>
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
     </table>
 
+    <div class="pagination pagination-lg justify-content-center mt-4">
+        {% include "includes/pagination.html" %}
+    </div>
     {% else %}
-    <p>No orders yet.</p>
+        <p>There are no orders.</p>
     {% endif %}
-  </div>
+</div>
 {% endblock %}

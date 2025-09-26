@@ -3,6 +3,13 @@
 
 {% block content %}
   <div class="container mt-8">
+    {% if messages %}
+    <div class="mb-3">
+      {% for message in messages %}
+        <div class="alert alert-{{ message.tags }}">{{ message }}</div>
+      {% endfor %}
+    </div>
+  {% endif %}
     <h1>{{ object|yesno:"Update,Create" }} Order</h1>
     <form method="post">
         {% csrf_token %}

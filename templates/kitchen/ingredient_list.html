@@ -8,37 +8,64 @@
         <a href="{% url 'kitchen:ingredient-create' %}" class="btn btn-primary link-to-page">Add Ingredient</a>
     </div>
 
+    {# --- Wyszukiwanie --- #}
+    <form method="get" class="mb-3 d-flex gap-2">
+      {{ search_form.field }}
+      {{ search_form.query }}
+      <button type="submit" class="btn btn-primary">Search</button>
+    </form>
+
     {% if ingredient_list %}
-    <table class="table">
-        <tr>
-            <th>ID</th>
-            <th>Name</th>
-            <th>Unit</th>
-            <th>Stock</th>
-            <th>Price/Unit</th>
-            <th>Actions</th>
-        </tr>
-        {% for ing in ingredient_list %}
-        <tr>
-            <td>{{ ing.id }}</td>
-            <td>{{ ing.name }}</td>
-            <td>{{ ing.unit }}</td>
-            <td>{{ ing.stock_amount }}</td>
-            <td>{{ ing.price_per_unit }}</td>
-            <td>
-                <a href="{% url 'kitchen:ingredient-update' pk=ing.id %}" class="btn btn-sm btn-primary">Update</a>
-                <a href="{% url 'kitchen:ingredient-delete' pk=ing.id %}" class="btn btn-sm btn-danger">Delete</a>
-            </td>
-        </tr>
-        {% endfor %}
+    <table class="table table-striped">
+        <thead>
+          <tr>
+              {% for f in allowed_fields %}
+              <th>
+                  {% comment %} Obliczamy kierunek sortowania {% endcomment %}
+                  {% if current_sort_field == f %}
+                      {% if current_sort_dir == 'asc' %}
+                          <a href="?field={{ current_search_field }}&search={{ current_search_query }}&sort={{ f }}&dir=desc">
+                              {{ f|capfirst }} &#9650;
+                          </a>
+                      {% else %}
+                          <a href="?field={{ current_search_field }}&search={{ current_search_query }}&sort={{ f }}&dir=asc">
+                              {{ f|capfirst }} &#9660;
+                          </a>
+                      {% endif %}
+                  {% else %}
+                      <a href="?field={{ current_search_field }}&search={{ current_search_query }}&sort={{ f }}&dir=asc">
+                          {{ f|capfirst }}
+                      </a>
+                  {% endif %}
+              </th>
+              {% endfor %}
+              <th>Actions</th>
+          </tr>
+        </thead>
+        <tbody>
+            {% for ing in ingredient_list %}
+            <tr>
+                <td>{{ ing.id }}</td>
+                <td>{{ ing.name }}</td>
+                <td>{{ ing.unit }}</td>
+                <td>{{ ing.stock_amount }}</td>
+                <td>{{ ing.price_per_unit }}</td>
+                <td>
+                    <a href="{% url 'kitchen:ingredient-update' pk=ing.id %}" class="btn btn-sm btn-primary">Update</a>
+                    <a href="{% url 'kitchen:ingredient-delete' pk=ing.id %}" class="btn btn-sm btn-danger">Delete</a>
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
     </table>
-      {% block pagination %}
-      <div class="pagination pagination-lg justify-content-center mt-4">
+
+    {# --- Paginacja --- #}
+    <div class="pagination pagination-lg justify-content-center mt-4">
         {% include "includes/pagination.html" %}
-      </div>
-    {% endblock %}
+    </div>
+
     {% else %}
-    <p>No ingredients yet.</p>
+    <p>No ingredients found.</p>
     {% endif %}
 </div>
 {% endblock %}

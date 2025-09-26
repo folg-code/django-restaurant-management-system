@@ -16,6 +16,8 @@ class Cook(AbstractUser):
     def get_absolute_url(self):
         return reverse("kitchen:cook-detail", kwargs={"pk": self.pk})
 
+
+
 class DishType(models.Model):
     name = models.CharField(max_length=100)
     def __str__(self):
@@ -44,13 +46,11 @@ class IngredientTransaction(models.Model):
     SUPPLY = "SUPPLY"
     WASTE = "WASTE"
 
-
     TRANSACTION_CHOICES = [
         (SUPPLY, "Supply"),
         (WASTE, "Waste"),
 
     ]
-
     ingredient = models.ForeignKey(
         Ingredient,
         on_delete=models.CASCADE,

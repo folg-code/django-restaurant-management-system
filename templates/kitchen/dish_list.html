@@ -2,58 +2,119 @@
 {% load crispy_forms_filters %}
 
 {% block content %}
-  <div class="container mt-8">
+<div class="container mt-8">
     <div class="d-flex justify-content-between align-items-center mb-4">
-      <h1 class="mb-0">Dish List</h1>
-      <a href="{% url 'kitchen:dish-create' %}" class="btn btn-primary link-to-page">
-        Create Dish
-      </a>
+        <h1 class="mb-0">Dish List</h1>
+        <a href="{% url 'kitchen:dish-create' %}" class="btn btn-primary link-to-page">Create Dish</a>
     </div>
-    <form method="get" action="" class="form-inline">
-      {{ search_form|crispy }}
-      <input type="submit" class="btn btn-secondary" value="Search">
-    </form>
-  {% if dish_list %}
-  <table class="table">
-    <tr>
-      <th>ID</th>
-      <th>Name</th>
-      <th>Dish Type</th>
-      <th>Ingredients</th>
-      <th>Price</th>
-      <th>Actions</th>
-    </tr>
-    {% for dish in dish_list %}
-      <tr>
-      <td>
-        <a >{{ dish.id }}</a>
-      </td>
-      <td>
-        <a href="{% url 'kitchen:dish-detail' pk=dish.id %}"> {{ dish.name }}</a>
-      </td>
-      <td>
-        {{ dish.dish_type }}
-      </td>
-      <td>
-        {% for ingredient in dish.ingredients.all %}
-          {{ ingredient.name }}{% if not forloop.last %}, {% endif %}
-        {% empty %}
-          Brak składników
-        {% endfor %}
-      </td>
-      <td>
-        {{ dish.price }}
-      </td>
-      <td>
-        <a href="{% url 'kitchen:dish-update' pk=dish.id %}" class="btn btn-sm btn-primary">Update</a>
-        <a href="{% url 'kitchen:dish-delete' pk=dish.id %}" class="btn btn-sm btn-danger">Delete</a>
-      </td>
-    </tr>
 
-  {% endfor %}
-  </table>
-  {% else %}
-    <p>There are no dishs in kitchen</p>
-  {% endif %}
-  </div>
+    {# --- Wyszukiwanie --- #}
+    <form method="get" class="mb-3 d-flex gap-2">
+        {{ search_form.field }}
+        {{ search_form.query }}
+        <button type="submit" class="btn btn-primary">Search</button>
+    </form>
+
+    {% if dish_list %}
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                {# ID #}
+                <th>
+                    {% if current_sort_field == 'id' %}
+                        {% if current_sort_dir == 'asc' %}
+                            <a href="?field={{ search_form.field.value }}&query={{ search_form.query.value }}&sort=id&dir=desc">ID &#9650;</a>
+                        {% else %}
+                            <a href="?field={{ search_form.field.value }}&query={{ search_form.query.value }}&sort=id&dir=asc">ID &#9660;</a>
+                        {% endif %}
+                    {% else %}
+                        <a href="?field={{ search_form.field.value }}&query={{ search_form.query.value }}&sort=id&dir=asc">ID</a>
+                    {% endif %}
+                </th>
+
+                {# Name #}
+                <th>
+                    {% if current_sort_field == 'name' %}
+                        {% if current_sort_dir == 'asc' %}
+                            <a href="?field={{ search_form.field.value }}&query={{ search_form.query.value }}&sort=name&dir=desc">Name &#9650;</a>
+                        {% else %}
+                            <a href="?field={{ search_form.field.value }}&query={{ search_form.query.value }}&sort=name&dir=asc">Name &#9660;</a>
+                        {% endif %}
+                    {% else %}
+                        <a href="?field={{ search_form.field.value }}&query={{ search_form.query.value }}&sort=name&dir=asc">Name</a>
+                    {% endif %}
+                </th>
+
+                {# Dish Type #}
+                <th>
+                    {% if current_sort_field == 'dish_type__name' %}
+                        {% if current_sort_dir == 'asc' %}
+                            <a href="?field={{ search_form.field.value }}&query={{ search_form.query.value }}&sort=dish_type__name&dir=desc">Dish Type &#9650;</a>
+                        {% else %}
+                            <a href="?field={{ search_form.field.value }}&query={{ search_form.query.value }}&sort=dish_type__name&dir=asc">Dish Type &#9660;</a>
+                        {% endif %}
+                    {% else %}
+                        <a href="?field={{ search_form.field.value }}&query={{ search_form.query.value }}&sort=dish_type__name&dir=asc">Dish Type</a>
+                    {% endif %}
+                </th>
+
+                {# Ingredients Count #}
+                <th>
+                    {% if current_sort_field == 'ingredients_count' %}
+                        {% if current_sort_dir == 'asc' %}
+                            <a href="?field={{ search_form.field.value }}&query={{ search_form.query.value }}&sort=ingredients_count&dir=desc">Ingredients &#9650;</a>
+                        {% else %}
+                            <a href="?field={{ search_form.field.value }}&query={{ search_form.query.value }}&sort=ingredients_count&dir=asc">Ingredients &#9660;</a>
+                        {% endif %}
+                    {% else %}
+                        <a href="?field={{ search_form.field.value }}&query={{ search_form.query.value }}&sort=ingredients_count&dir=asc">Ingredients</a>
+                    {% endif %}
+                </th>
+
+                {# Price #}
+                <th>
+                    {% if current_sort_field == 'price' %}
+                        {% if current_sort_dir == 'asc' %}
+                            <a href="?field={{ search_form.field.value }}&query={{ search_form.query.value }}&sort=price&dir=desc">Price &#9650;</a>
+                        {% else %}
+                            <a href="?field={{ search_form.field.value }}&query={{ search_form.query.value }}&sort=price&dir=asc">Price &#9660;</a>
+                        {% endif %}
+                    {% else %}
+                        <a href="?field={{ search_form.field.value }}&query={{ search_form.query.value }}&sort=price&dir=asc">Price</a>
+                    {% endif %}
+                </th>
+
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for dish in dish_list %}
+            <tr>
+                <td>{{ dish.id }}</td>
+                <td><a href="{% url 'kitchen:dish-detail' pk=dish.id %}">{{ dish.name }}</a></td>
+                <td>{{ dish.dish_type }}</td>
+                <td>
+                    {% for ingredient in dish.ingredients.all %}
+                        {{ ingredient.name }}{% if not forloop.last %}, {% endif %}
+                    {% empty %}
+                        Brak składników
+                    {% endfor %}
+                </td>
+                <td>{{ dish.price }}</td>
+                <td>
+                    <a href="{% url 'kitchen:dish-update' pk=dish.id %}" class="btn btn-sm btn-primary">Update</a>
+                    <a href="{% url 'kitchen:dish-delete' pk=dish.id %}" class="btn btn-sm btn-danger">Delete</a>
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+
+    <div class="pagination pagination-lg justify-content-center mt-4">
+        {% include "includes/pagination.html" %}
+    </div>
+    {% else %}
+        <p>There are no dishes in the kitchen.</p>
+    {% endif %}
+</div>
 {% endblock %}

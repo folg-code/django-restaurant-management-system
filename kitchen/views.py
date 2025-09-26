@@ -1,8 +1,10 @@
 from decimal import Decimal
 
 from django import forms
+from django.contrib import messages
 from django.db import transaction
-from django.forms import formset_factory, modelformset_factory
+from django.db.models import Q, Sum, F, ExpressionWrapper
+from django.forms import formset_factory, modelformset_factory, FloatField, DecimalField
 from django.shortcuts import render, redirect, get_object_or_404
 from django.http import HttpResponseRedirect
 from django.views import generic, View
@@ -14,7 +16,7 @@ from django.contrib.auth import get_user_model
 
 from kitchen.forms import DishForm, CookCreationForm, CookUpdateForm, CookSearchForm, DishTypeSearchForm, \
     DishSearchForm, IngredientForm, OrderForm, DishIngredientFormSet, OrderItemFormSet, IngredientTransactionForm, \
-    IngredientWasteForm
+    IngredientWasteForm, IngredientSearchForm, OrderSearchForm, IngredientTransactionSearchForm
 from kitchen.models import DishType, Cook, Dish, Ingredient, Order, OrderItem, FinanceManager, IngredientTransaction
 
 User = get_user_model()
@@ -76,25 +78,42 @@ class DishTypeDeleteView(LoginRequiredMixin, generic.DeleteView):
 
 
 class DishListView(LoginRequiredMixin, generic.ListView):
-
     model = Dish
-    queryset = Dish.objects.select_related("dish_type").all()
-    paginate_by = 7
-
-    def get_context_data(self, *, object_list=None, **kwargs):
-        context = super(DishListView, self).get_context_data(**kwargs)
-        context["search_form"] = DishSearchForm(self.request.GET)
-        return context
+    template_name = "kitchen/dish_list.html"
+    context_object_name = "dish_list"
+    paginate_by = 20
 
     def get_queryset(self):
-        queryset = (Dish.
-                    objects.
-                    select_related("dish_type").
-                    order_by("name"))
-        name = self.request.GET.get("name")
-        if name:
-            queryset = queryset.filter(name__icontains=name)
+        queryset = super().get_queryset()
+        self.form = DishSearchForm(self.request.GET)
+
+        if self.form.is_valid():
+            field = self.form.cleaned_data.get('field') or 'name'
+            query = self.form.cleaned_data.get('query', '')
+
+            allowed_fields = ['name', 'description', 'price', 'dish_type__name']
+            if field in allowed_fields and query:
+                kwargs = {f"{field}__icontains": query} if '__' not in field else {f"{field}__icontains": query}
+                queryset = queryset.filter(**kwargs)
+
+        # Sortowanie
+        sort_field = self.request.GET.get('sort', 'name')
+        sort_dir = self.request.GET.get('dir', 'asc')
+        allowed_sort_fields = ['name', 'price', 'dish_type__name']
+        if sort_field in allowed_sort_fields:
+            if sort_dir == 'desc':
+                sort_field = f"-{sort_field}"
+            queryset = queryset.order_by(sort_field)
+
         return queryset
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['search_form'] = self.form
+        context['current_sort_field'] = self.request.GET.get('sort', 'name')
+        context['current_sort_dir'] = self.request.GET.get('dir', 'asc')
+        context['allowed_fields'] = ['name', 'price', 'dish_type__name']
+        return context
 
 
 class DishDetailView(LoginRequiredMixin, generic.DetailView):
@@ -154,22 +173,48 @@ class DishUpdateView(LoginRequiredMixin, generic.UpdateView):
 class DishDeleteView(LoginRequiredMixin, generic.DeleteView):
     model = Dish
     success_url = reverse_lazy("kitchen:dish-list")
-class CookListView(LoginRequiredMixin, generic.ListView):
-
+class CookListView(generic.ListView):
     model = Cook
-    paginate_by = 7
-
-    def get_context_data(self, *, object_list=None, **kwargs):
-        context = super(CookListView, self).get_context_data(**kwargs)
-        context["search_form"] = CookSearchForm(self.request.GET)
-        return context
+    template_name = "kitchen/cook_list.html"
+    context_object_name = "cook_list"
+    paginate_by = 20
 
     def get_queryset(self):
-        username = self.request.GET.get("username")
         queryset = super().get_queryset()
-        if username:
-            return Cook.objects.filter(username__icontains=username)
-        return queryset.order_by("username")
+        self.form = CookSearchForm(self.request.GET)
+
+        if self.form.is_valid():
+            field = self.form.cleaned_data.get('field') or 'username'
+            query = self.form.cleaned_data.get('query', '')
+
+            allowed_fields = ['username', 'email', 'years_of_experience', 'salary']
+            if field in allowed_fields and query:
+                if field in ['years_of_experience', 'salary']:
+                    # numeryczne pola
+                    try:
+                        queryset = queryset.filter(**{f"{field}": query})
+                    except ValueError:
+                        queryset = queryset.none()
+                else:
+                    queryset = queryset.filter(**{f"{field}__icontains": query})
+
+        # Sortowanie
+        sort_field = self.request.GET.get('sort', 'username')
+        sort_dir = self.request.GET.get('dir', 'asc')
+        allowed_sort_fields = ['username', 'email', 'years_of_experience', 'salary', 'id']
+        if sort_field in allowed_sort_fields:
+            if sort_dir == 'desc':
+                sort_field = f"-{sort_field}"
+            queryset = queryset.order_by(sort_field)
+
+        return queryset
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['search_form'] = self.form
+        context['current_sort_field'] = self.request.GET.get('sort', 'username')
+        context['current_sort_dir'] = self.request.GET.get('dir', 'asc')
+        return context
 
 
 class CookDetailView(generic.DetailView):
@@ -204,6 +249,36 @@ class IngredientListView(generic.ListView):
     template_name = "kitchen/ingredient_list.html"
     context_object_name = "ingredient_list"
 
+    def get_queryset(self):
+        queryset = super().get_queryset()
+        self.form = IngredientSearchForm(self.request.GET)
+
+        if self.form.is_valid():
+            field = self.form.cleaned_data.get('field') or 'name'
+            query = self.form.cleaned_data.get('query', '')
+
+            allowed_fields = ['id', 'name', 'unit', 'stock_amount', 'price_per_unit']
+            if field in allowed_fields and query:
+                kwargs = {f"{field}__icontains": query}
+                queryset = queryset.filter(**kwargs)
+
+        sort_field = self.request.GET.get('sort', 'id')
+        sort_dir = self.request.GET.get('dir', 'asc')
+        if sort_field in ['id', 'name', 'unit', 'stock_amount', 'price_per_unit']:
+            if sort_dir == 'desc':
+                sort_field = f"-{sort_field}"
+            queryset = queryset.order_by(sort_field)
+
+        return queryset
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['search_form'] = self.form
+        context['current_sort_field'] = self.request.GET.get('sort', 'id')
+        context['current_sort_dir'] = self.request.GET.get('dir', 'asc')
+        context['allowed_fields'] = ['id', 'name', 'unit', 'stock_amount', 'price_per_unit']
+        return context
+
 class IngredientCreateView(generic.CreateView):
     model = Ingredient
     form_class = IngredientForm
@@ -226,7 +301,48 @@ class IngredientTransactionListView(generic.ListView):
     model = IngredientTransaction
     template_name = "kitchen/ingredienttransaction_list.html"
     context_object_name = "transaction_list"
-    paginate_by = 10
+    paginate_by = 20
+
+    def get_queryset(self):
+        queryset = IngredientTransaction.objects.select_related('ingredient')
+
+        self.form = IngredientTransactionSearchForm(self.request.GET)
+
+        if self.form.is_valid():
+            field = self.form.cleaned_data.get('field') or 'ingredient'
+            query = self.form.cleaned_data.get('query', '')
+
+            if field == 'ingredient' and query:
+                queryset = queryset.filter(ingredient__name__icontains=query)
+            elif field == 'transaction_type' and query:
+                queryset = queryset.filter(transaction_type__icontains=query)
+            elif field == 'created_at' and query:
+                queryset = queryset.filter(created_at__date=query)
+            elif field == 'quantity' and query:
+                try:
+                    queryset = queryset.filter(quantity=float(query))
+                except ValueError:
+                    queryset = queryset.none()
+
+        # Sortowanie
+        sort_field = self.request.GET.get('sort', 'created_at')
+        sort_dir = self.request.GET.get('dir', 'asc')
+        allowed_sort_fields = ['ingredient', 'transaction_type', 'created_at', 'quantity', 'price_per_unit', 'id']
+
+        if sort_field in allowed_sort_fields:
+            if sort_field == 'ingredient':
+                queryset = queryset.order_by(f"{'-' if sort_dir=='desc' else ''}ingredient__name")
+            else:
+                queryset = queryset.order_by(f"{'-' if sort_dir=='desc' else ''}{sort_field}")
+
+        return queryset
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['search_form'] = self.form
+        context['current_sort_field'] = self.request.GET.get('sort', 'created_at')
+        context['current_sort_dir'] = self.request.GET.get('dir', 'asc')
+        return context
 
 class IngredientTransactionCreateView(generic.CreateView):
     model = IngredientTransaction
@@ -314,11 +430,54 @@ class IngredientTransactionDeleteView(generic.DeleteView):
     success_url = reverse_lazy("kitchen:ingredienttransaction-list")
 
 
-class OrderListView(LoginRequiredMixin, generic.ListView):
+from django.views import generic
+from .models import Order
+from .forms import OrderSearchForm
+
+class OrderListView(generic.ListView):
     model = Order
     template_name = "kitchen/order_list.html"
     context_object_name = "order_list"
-    paginate_by = 10
+    paginate_by = 20
+
+    def get_queryset(self):
+        queryset = Order.objects.prefetch_related('items__dish')
+
+        self.form = OrderSearchForm(self.request.GET)
+
+        # Filtrowanie
+        if self.form.is_valid():
+            field = self.form.cleaned_data.get('field') or 'id'
+            query = self.form.cleaned_data.get('query', '')
+
+            if field == 'id' and query.isdigit():
+                queryset = queryset.filter(id=int(query))
+            elif field == 'created_at' and query:
+                queryset = queryset.filter(created_at__date=query)
+
+        # Konwertujemy na listę, żeby sortować po total_price w Pythonie
+        orders = list(queryset)
+
+        # Sortowanie
+        sort_field = self.request.GET.get('sort', 'id')
+        sort_dir = self.request.GET.get('dir', 'asc')
+
+        if sort_field == 'total_price':
+            orders.sort(key=lambda o: o.total_price, reverse=(sort_dir == 'desc'))
+        else:
+            # sortowanie po polach w modelu
+            allowed_sort_fields = ['id', 'created_at']
+            if sort_field in allowed_sort_fields:
+                orders.sort(key=lambda o: getattr(o, sort_field), reverse=(sort_dir == 'desc'))
+
+        return orders
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['search_form'] = self.form
+        context['current_sort_field'] = self.request.GET.get('sort', 'id')
+        context['current_sort_dir'] = self.request.GET.get('dir', 'asc')
+        return context
 
 
 class OrderCreateView(LoginRequiredMixin, generic.CreateView):
@@ -338,9 +497,26 @@ class OrderCreateView(LoginRequiredMixin, generic.CreateView):
         context = self.get_context_data()
         items = context['items']
 
-        with transaction.atomic():
-            self.object = form.save()
-            if items.is_valid():
+        # Sprawdzenie, czy wszystkie składniki są dostępne
+        if items.is_valid():
+            out_of_stock = []
+            for order_item_form in items:
+                dish = order_item_form.cleaned_data.get('dish')
+                quantity = order_item_form.cleaned_data.get('quantity', 0)
+                if dish and quantity:
+                    for di in dish.dishingredient_set.all():
+                        ingredient = di.ingredient
+                        if ingredient.stock_amount < di.amount_required * quantity:
+                            out_of_stock.append(ingredient.name)
+
+            if out_of_stock:
+                # Pokazanie komunikatu i ponowne wyświetlenie formularza
+                messages.error(self.request, f"Ingredient(s) out of stock: {', '.join(out_of_stock)}")
+                return self.render_to_response(self.get_context_data(form=form))
+
+            # Jeśli wszystkie składniki dostępne, zapisujemy zamówienie
+            with transaction.atomic():
+                self.object = form.save()
                 items.instance = self.object
                 items.save()
 
@@ -350,10 +526,12 @@ class OrderCreateView(LoginRequiredMixin, generic.CreateView):
                     for di in dish.dishingredient_set.all():
                         ingredient = di.ingredient
                         ingredient.stock_amount -= di.amount_required * quantity
-                        if ingredient.stock_amount < 0:
-                            ingredient.stock_amount = 0
                         ingredient.save()
-        return redirect('kitchen:order-list')
+
+            return redirect('kitchen:order-list')
+
+        # Jeśli formularze nie są poprawne
+        return self.form_invalid(form)
 
 class OrderUpdateView(LoginRequiredMixin, generic.UpdateView):
     model = Order
