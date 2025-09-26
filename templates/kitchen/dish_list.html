@@ -1,4 +1,4 @@
-{% extends "base.html" %}
+{% extends 'layouts/base-presentation.html' %}
 {% load crispy_forms_filters %}
 
 {% block content %}
@@ -28,7 +28,11 @@
         {{ dish.dish_type }}
       </td>
       <td>
-        {{ dish.ingredients }}
+        {% for ingredient in dish.ingredients.all %}
+          {{ ingredient.name }}{% if not forloop.last %}, {% endif %}
+        {% empty %}
+          Brak składników
+        {% endfor %}
       </td>
       <td>
         {{ dish.price }}

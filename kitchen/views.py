@@ -20,6 +20,7 @@ def index(request):
     num_dish_type = DishType.objects.count()
     num_cook = Cook.objects.count()
     num_dish = Dish.objects.count()
+    num_orders = Order.objects.count()
     num_visits = request.session.get("num_visits", 0)
     request.session["num_visits"] = num_visits + 1
 
@@ -27,6 +28,7 @@ def index(request):
         "num_dish_type": num_dish_type,
         "num_cook": num_cook,
         "num_dish": num_dish,
+        "num_orders": num_orders,
         "num_visits": num_visits + 1
     }
 
@@ -86,9 +88,9 @@ class DishListView(LoginRequiredMixin, generic.ListView):
                     objects.
                     select_related("dish_type").
                     order_by("name"))
-        model = self.request.GET.get("name")
-        if model:
-            queryset = queryset.filter(model__icontains=model)
+        name = self.request.GET.get("name")
+        if name:
+            queryset = queryset.filter(name__icontains=name)
         return queryset
 
 
