@@ -1,53 +1,55 @@
-{% extends "base.html" %}
+{% extends 'layouts/base-presentation.html' %}
 {% load crispy_forms_filters %}
 
 {% block content %}
-  <h1>
-    Dish Types List
-    <a href="{% url 'kitchen:dish_type-create' %}" class="btn btn-primary link-to-page">
-      Create
-    </a>
-  </h1>
+  <div class="container mt-8">
+    <h1>
+      Dish Types List
+      <a href="{% url 'kitchen:dish_type-create' %}" class="btn btn-primary link-to-page">
+        Create
+      </a>
+    </h1>
 
-  <form method="get" action="" class="form-inline">
-      {{ search_form|crispy }}
-      <input type="submit" class="btn btn-secondary" value="Search">
-  </form>
-  {% if dish_type_list %}
-    <table class="table">
-      <tr>
-        <th>ID</th>
-        <th>Name</th>
-
-        <th>Update</th>
-        <th>Delete</th>
-      </tr>
-
-      {% for dish_type in dish_type_list %}
+    <form method="get" action="" class="form-inline">
+        {{ search_form|crispy }}
+        <input type="submit" class="btn btn-secondary" value="Search">
+    </form>
+    {% if dish_type_list %}
+      <table class="table">
         <tr>
-          <td>
-              {{ dish_type.id }}
-          </td>
-          <td>
-              {{ dish_type.name }}
-          </td>
+          <th>ID</th>
+          <th>Name</th>
 
-          <td>
-            <a href="{% url 'kitchen:dish_type-update' pk=dish_type.id %}" class="btn btn-primary">
-              Update
-            </a>
-          </td>
-          <td>
-            <a style="color: red"
-              href="{% url 'kitchen:dish_type-delete' pk=dish_type.id %}">
-              Delete
-            </a>
-          </td>
+          <th>Update</th>
+          <th>Delete</th>
         </tr>
-      {% endfor %}
-    </table>
 
-  {% else %}
-      <p>There are no dish types in the service.</p>
-  {% endif %}
+        {% for dish_type in dish_type_list %}
+          <tr>
+            <td>
+                {{ dish_type.id }}
+            </td>
+            <td>
+                {{ dish_type.name }}
+            </td>
+
+            <td>
+              <a href="{% url 'kitchen:dish_type-update' pk=dish_type.id %}" class="btn btn-primary">
+                Update
+              </a>
+            </td>
+            <td>
+              <a
+                href="{% url 'kitchen:dish_type-delete' pk=dish_type.id %}" class="btn btn-primary">
+                Delete
+              </a>
+            </td>
+          </tr>
+        {% endfor %}
+      </table>
+
+    {% else %}
+        <p>There are no dish types in the service.</p>
+    {% endif %}
+  </div>
 {% endblock %}

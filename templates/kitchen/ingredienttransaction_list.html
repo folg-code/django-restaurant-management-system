@@ -91,8 +91,16 @@
     <tbody>
     {% for tx in transaction_list %}
       <tr>
-        <td>{{ tx.id }}</td>
-        <td>{{ tx.ingredient.name }}</td>
+        <td>
+          <a href="{% url 'kitchen:ingredienttransaction-detail' pk=tx.id %}">
+            {{ tx.id }}
+          </a>
+        </td>
+        <td>
+          <a href="{% url 'kitchen:ingredient-detail' pk=tx.ingredient.id %}">
+            {{ tx.ingredient.name }}
+          </a>
+        </td>
         <td>{{ tx.transaction_type }}</td>
         <td>{{ tx.quantity }}</td>
         <td>{{ tx.price_per_unit }}</td>

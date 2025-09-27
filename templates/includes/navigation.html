@@ -23,7 +23,10 @@
                 <a class="nav-link" href="{% url 'kitchen:dish-list' %}">Dishes</a>
               </li>
               <li class="nav-item">
-                <a class="nav-link" href="{% url 'kitchen:cook-list' %}">Cooks</a>
+                <a class="nav-link" href="{% url 'kitchen:dish_type-list' %}">Dish Types</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="{% url 'kitchen:chef-list' %}">Chefs</a>
               </li>
               <li class="nav-item">
                 <a class="nav-link" href="{% url 'kitchen:order-list' %}">Orders</a>
@@ -38,10 +41,18 @@
                 <a class="nav-link" href="{% url 'kitchen:finance_dashboard' %}">Finance</a>
               </li>
               <li class="nav-item ms-lg-auto">
-                <a class="nav-link nav-link-icon me-2" href="{% url 'logout' %}">
-                  <i class="fa fa-sign-out me-1"></i>
-                  <p class="d-inline text-sm z-index-1 font-weight-bold btn btn-sm bg-gradient-primary btn-round mb-0 me-1 mt-2 mt-md-0" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Logout">Logout</p>
-                </a>
+                <form method="post" action="{% url 'logout' %}">
+                  {% csrf_token %}
+                  <button type="submit" class="nav-link nav-link-icon me-2 border-0 bg-transparent p-0">
+                    <i class="fa fa-sign-out me-1"></i>
+                    <p class="d-inline text-sm z-index-1 font-weight-bold btn btn-sm bg-gradient-primary btn-round mb-0 me-1 mt-2 mt-md-0"
+                       data-bs-toggle="tooltip"
+                       data-bs-placement="bottom"
+                       title="Logout">
+                       Logout
+                    </p>
+                  </button>
+                </form>
               </li>
             </ul>
           </div>

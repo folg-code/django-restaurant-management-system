@@ -18,7 +18,6 @@
       <tr>
         {% for f in allowed_fields %}
           <th>
-            {% comment %} Obliczamy kierunek sortowania {% endcomment %}
             {% if current_sort_field == f %}
               {% if current_sort_dir == 'asc' %}
                 <a href="?field={{ current_search_field }}&search={{ current_search_query }}&sort={{ f }}&dir=desc">
@@ -43,7 +42,11 @@
       {% for ing in ingredient_list %}
         <tr>
           <td>{{ ing.id }}</td>
-          <td>{{ ing.name }}</td>
+          <td>
+            <a href="{% url 'kitchen:ingredient-detail' pk=ing.id %}">
+              {{ ing.name }}
+            </a>
+          </td>
           <td>{{ ing.unit }}</td>
           <td>{{ ing.stock_amount }}</td>
           <td>{{ ing.price_per_unit }}</td>

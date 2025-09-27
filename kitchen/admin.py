@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import DishType, Dish, Cook
+from .models import DishType, Dish, Chef
 
 
 @admin.register(DishType)
@@ -15,7 +15,8 @@ class DishAdmin(admin.ModelAdmin):
     search_fields = ("name",)
 
 
-@admin.register(Cook)
-class CookAdmin(admin.ModelAdmin):
-    list_display = ("id", "username", "first_name", "last_name", "years_of_experience")
+@admin.register(Chef)
+class ChefsAdmin(admin.ModelAdmin):
+    list_display = ("id", "username", "first_name",
+                    "last_name", "years_of_experience")
     search_fields = ("username", "first_name", "last_name")

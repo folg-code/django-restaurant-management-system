@@ -4,15 +4,15 @@
 {% block content %}
 <div class="container mt-8">
   <div class="d-flex justify-content-between align-items-center mb-4">
-    <h1 class="mb-0">Cook List</h1>
-    <a href="{% url 'kitchen:cook-create' %}" class="btn btn-primary link-to-page">Create Cook</a>
+    <h1 class="mb-0">Chef List</h1>
+    <a href="{% url 'kitchen:chef-create' %}" class="btn btn-primary link-to-page">Create Chef</a>
   </div>
   <form method="get" class="mb-3 d-flex gap-2">
     {{ search_form.field }}
     {{ search_form.query }}
     <button type="submit" class="btn btn-primary">Search</button>
   </form>
-  {% if cook_list %}<table class="table table-striped">
+  {% if chef_list %}<table class="table table-striped">
     <thead>
     <tr>
       <th>
@@ -74,16 +74,23 @@
     </tr>
     </thead>
     <tbody>
-    {% for cook in cook_list %}
+    {% for chef in chef_list %}
       <tr>
-        <td>{{ cook.id }}</td>
-        <td>{{ cook.username }}</td>
-        <td>{{ cook.email }}</td>
-        <td>{{ cook.years_of_experience }}</td>
-        <td>{{ cook.salary }}</td>
+        <td>{{ chef.id }}</td>
         <td>
-          <a href="{% url 'kitchen:cook-update' pk=cook.id %}" class="btn btn-sm btn-primary">Update</a>
-          <a href="{% url 'kitchen:cook-delete' pk=cook.id %}" class="btn btn-sm btn-danger">Delete</a>
+          <a href="{% url 'kitchen:chef-detail' pk=chef.id %}">
+            {{ chef.username }}
+          </a>
+          {% if request.user.id == chef.id %}
+            <span class="text-muted">(Me)</span>
+          {% endif %}
+        </td>
+        <td>{{ chef.email }}</td>
+        <td>{{ chef.years_of_experience }}</td>
+        <td>{{ chef.salary }}</td>
+        <td>
+          <a href="{% url 'kitchen:chef-update' pk=chef.id %}" class="btn btn-sm btn-primary">Update</a>
+          <a href="{% url 'kitchen:chef-delete' pk=chef.id %}" class="btn btn-sm btn-danger">Delete</a>
         </td>
       </tr>
     {% endfor %}
@@ -92,7 +99,7 @@
     {% include "includes/pagination.html" %}
   </div>
   {% else %}
-    <p>There are no cooks in the kitchen.</p>
+    <p>There are no chefs in the kitchen.</p>
   {% endif %}
 </div>
 {% endblock %}

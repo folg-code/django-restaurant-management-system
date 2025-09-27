@@ -14,20 +14,20 @@
   </h1>
   <p>Dish Type: ({{ dish.dish_type.name }})</p>
 
-  <h2>Cooks</h2>
+  <h2>Chefs</h2>
   <hr>
   <ul>
-    {% for cook in dish.cooks.all %}
-      <li>{{ cook.username }} ({{ cook.first_name }} {{ cook.last_name }})</li>
+    {% for chef in dish.chefs.all %}
+      <li>{{ chef.username }} ({{ chef.first_name }} {{ chef.last_name }})</li>
     {% empty %}
-      <li>No cooks assigned.</li>
+      <li>No chefs assigned.</li>
     {% endfor %}
   </ul>
 
   {% if user.is_authenticated %}
-    <form action="{% url 'kitchen:dish-toggle-cook' pk=dish.id %}" method="post" style="margin-top: 15px;">
+    <form action="{% url 'kitchen:dish-toggle-chef' pk=dish.id %}" method="post" style="margin-top: 15px;">
       {% csrf_token %}
-      {% if user in dish.cooks.all %}
+      {% if user in dish.chefs.all %}
         <input type="submit" value="Delete me from this dish" class="btn btn-warning">
       {% else %}
         <input type="submit" value="Assign me to this dish" class="btn btn-success">

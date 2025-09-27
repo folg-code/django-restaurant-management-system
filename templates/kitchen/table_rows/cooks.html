@@ -1,22 +1,22 @@
-{% for cook in items %}
+{% for chef in items %}
   <tr class="hover:bg-gray-50">
     <td class="border-b text-right tabular-nums">
       {{ start_index|add:forloop.counter0 }}
     </td>
     <td class="border-b">
-      <a href="{% url 'kitchen:cook-detail' cook.pk %}"
+      <a href="{% url 'kitchen:chef-detail' chef.pk %}"
          class="text-blue-600 hover:underline px-1.5 py-0.5 -m-0.5 rounded-md focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-indigo-500 focus-visible:ring-offset-2 focus-visible:ring-offset-white">
-        {{ cook.username }}
+        {{ chef.username }}
       </a>
     </td>
       <td
     class="border-b whitespace-nowrap">
-    {{ cook.first_name }} {{ cook.last_name }}
+    {{ chef.first_name }} {{ chef.last_name }}
   </td>
 {% empty %}
   <tr>
     <td colspan="{{ headers|length }}" class="px-4 py-2 text-center text-gray-500">
-      No cooks
+      No chefs
     </td>
   </tr>
 {% endfor %}
