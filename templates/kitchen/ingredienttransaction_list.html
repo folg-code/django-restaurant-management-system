@@ -109,7 +109,7 @@
         <td>{{ tx.note }}</td>
         <td>
           {% if tx.transaction_type == tx.SUPPLY %}
-            <a href="{% url 'kitchen:ingredienttransaction-waste' pk=tx.id %}" class="btn btn-primary link-to-page">Waste Supply</a>
+            <a href="{% url 'kitchen:ingredienttransaction-waste' pk=tx.id %}" class="btn btn-sm btn-primary link-to-page">Waste Supply</a>
           {% endif %}
           <a href="{% url 'kitchen:ingredienttransaction-update' pk=tx.id %}" class="btn btn-sm btn-primary">Update</a>
           <a href="{% url 'kitchen:ingredienttransaction-delete' pk=tx.id %}" class="btn btn-sm btn-danger">Delete</a>
