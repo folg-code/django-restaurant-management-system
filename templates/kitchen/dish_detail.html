@@ -4,15 +4,9 @@
 {% block content %}
   <div class="container mt-8">
   <h1>
-    {{ dish.model }}
-    <a href="{% url 'kitchen:dish-update' pk=dish.id %}" class="btn btn-secondary link-to-page">
-      Update
-    </a>
-    <a href="{% url 'kitchen:dish-delete' pk=dish.id %}" class="btn btn-danger link-to-page">
-      Delete
-    </a>
+    {{ dish.name }}
   </h1>
-  <p>Dish Type: ({{ dish.dish_type.name }})</p>
+  <p>Dish Type: {{ dish.dish_type.name }}</p>
 
   <h2>Chefs</h2>
   <hr>
@@ -21,6 +15,16 @@
       <li>{{ chef.username }} ({{ chef.first_name }} {{ chef.last_name }})</li>
     {% empty %}
       <li>No chefs assigned.</li>
+    {% endfor %}
+  </ul>
+
+   <h2>Ingredients</h2>
+  <hr>
+  <ul>
+    {% for di in dish.dishingredient_set.all %}
+      <li>{{ di.ingredient.name }} – {{ di.amount_required }} {{ di.ingredient.unit }}</li>
+    {% empty %}
+      <li>No ingredients assigned.</li>
     {% endfor %}
   </ul>
 
@@ -34,5 +38,12 @@
       {% endif %}
     </form>
   {% endif %}
+  <a href="{% url 'kitchen:dish-update' pk=dish.id %}" class="btn btn-secondary link-to-page">
+      Update
+  </a>
+  <a href="{% url 'kitchen:dish-delete' pk=dish.id %}" class="btn btn-danger link-to-page">
+    Delete
+  </a>
+    <a href="{% url 'kitchen:dish-list' %}" class="btn btn-secondary">⬅ Back to list</a>
   </div>
 {% endblock %}
