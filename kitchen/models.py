@@ -34,7 +34,10 @@ class Ingredient(models.Model):
             CharField(max_length=20,
                       default="kg",
                       help_text="Unit e.g., kg, l, pcs"))
-    stock_amount = models.FloatField(default=0, help_text="Current stock")
+    stock_amount = models.DecimalField(max_digits=6,
+                                       decimal_places=2,
+                                       default=0,
+                                       help_text="Current stock")
 
     @property
     def price_per_unit(self):
@@ -75,7 +78,9 @@ class IngredientTransaction(models.Model):
         max_length=10,
         choices=TRANSACTION_CHOICES
     )
-    quantity = models.FloatField()
+    quantity = models.DecimalField(max_digits=6,
+                                   decimal_places=2,
+                                   default=0)
     price_per_unit = (models.
                       DecimalField(max_digits=6,
                                    decimal_places=2,
@@ -146,8 +151,10 @@ class DishIngredient(models.Model):
     dish = models.ForeignKey(Dish, on_delete=models.CASCADE)
     ingredient = models.ForeignKey(Ingredient, on_delete=models.CASCADE)
     amount_required = (models.
-                       FloatField
-                       (help_text="Ilość składnika potrzebna na 1 porcję"))
+                       DecimalField(
+                        max_digits=8,
+                        decimal_places=2,
+                        help_text="Ilość składnika potrzebna na 1 porcję"))
 
     class Meta:
         unique_together = ("dish", "amount_required")

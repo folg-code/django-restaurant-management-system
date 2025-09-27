@@ -259,9 +259,9 @@ class ChefUpdateView(LoginRequiredMixin, generic.UpdateView):
     model = User
     form_class = ChefUpdateForm
     template_name = "kitchen/chef_form.html"
+    success_url = reverse_lazy("kitchen:chef-list")
 
-    def get_success_url(self):
-        return reverse("kitchen:chef-detail", kwargs={"pk": self.object.pk})
+
 
 
 class IngredientListView(generic.ListView):
@@ -635,6 +635,12 @@ class OrderDeleteView(LoginRequiredMixin, generic.DeleteView):
     model = Order
     template_name = "kitchen/order_confirm_delete.html"
     success_url = reverse_lazy("kitchen:order-list")
+
+
+class OrderDetailView(LoginRequiredMixin, generic.DetailView):
+    model = Order
+    template_name = "kitchen/order_detail.html"
+    context_object_name = "order"
 
 
 class IngredientDetailView(generic.DetailView):

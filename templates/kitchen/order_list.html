@@ -57,7 +57,11 @@
       <tbody>
       {% for order in order_list %}
         <tr>
-          <td>{{ order.id }}</td>
+          <td>
+            <a href="{% url 'kitchen:order-detail' order.pk %}">
+              {{ order.id }}
+            </a>
+          </td>
           <td>{{ order.created_at }}</td>
           <td>{{ order.total_price }}</td>
           <td>

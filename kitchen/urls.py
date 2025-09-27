@@ -15,7 +15,7 @@ from kitchen.views import (
     IngredientDetailView, IngredientTransactionDetailView,
     IngredientTransactionListView, IngredientTransactionCreateView,
     IngredientTransactionUpdateView, IngredientWasteCreateView,
-    IngredientTransactionDeleteView
+    IngredientTransactionDeleteView, OrderDetailView
 )
 
 
@@ -148,6 +148,11 @@ urlpatterns = [
     path("orders/",
          OrderListView.as_view(),
          name="order-list"
+         ),
+
+    path("orders/<int:pk>/",
+         OrderDetailView.as_view(),
+         name="order-detail"
          ),
     path("orders/create/",
          OrderCreateView.as_view(),
