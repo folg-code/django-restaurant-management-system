@@ -3,34 +3,34 @@
 
 {% block content %}
   <div class="container mt-8">
-  <h1>
-    Username: {{ chef.username }}
-    <a href="{% url 'kitchen:chef-delete' pk=chef.id %}" class="btn btn-danger link-to-page">
-      Delete
-    </a>
+    <h1>
+      Username: {{ chef.username }}
+    </h1>
 
+    <p><strong>First name:</strong> {{ chef.first_name }}</p>
+    <p><strong>Last name:</strong> {{ chef.last_name }}</p>
+    <p><strong>Salary :</strong> {{ chef.salary }}</p>
+    <p><strong>Experience [years]:</strong> {{ chef.years_of_experience }}</p>
+
+    <div class="ml-3">
+      <h4>Dishes</h4>
+
+      {% for dish in chef.dishes.all %}
+          <hr>
+          <p><strong>Name:</strong> {{ dish.name }}</p>
+          <p><strong>Dish Type:</strong> {{ dish.dish_type.name }}</p>
+          <p class="text-muted"><strong>Id:</strong> {{dish.id}}</p>
+
+      {% empty %}
+        <p>No dishes!</p>
+      {% endfor %}
+    </div>
     <a href="{% url 'kitchen:chef-update' pk=chef.id %}" class="btn btn-secondary link-to-page">
       Update
     </a>
-  </h1>
-
-  <p><strong>First name:</strong> {{ chef.first_name }}</p>
-  <p><strong>Last name:</strong> {{ chef.last_name }}</p>
-  <p><strong>Salary :</strong> {{ chef.salary }}</p>
-  <p><strong>Experience [years]:</strong> {{ chef.years_of_experience }}</p>
-
-  <div class="ml-3">
-    <h4>Dishes</h4>
-
-    {% for dish in chef.dishes.all %}
-        <hr>
-        <p><strong>Name:</strong> {{ dish.name }}</p>
-        <p><strong>Dish Type:</strong> {{ dish.dish_type.name }}</p>
-        <p class="text-muted"><strong>Id:</strong> {{dish.id}}</p>
-
-    {% empty %}
-      <p>No dishes!</p>
-    {% endfor %}
-  </div>
+    <a href="{% url 'kitchen:chef-delete' pk=chef.id %}" class="btn btn-danger link-to-page">
+      Delete
+    </a>
+    <a href="{% url 'kitchen:chef-list' %}" class="btn btn-secondary">⬅ Back to list</a>
   </div>
 {% endblock %}
