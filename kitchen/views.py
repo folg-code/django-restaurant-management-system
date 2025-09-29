@@ -85,6 +85,17 @@ class DishTypeDeleteView(LoginRequiredMixin, generic.DeleteView):
     model = DishType
     success_url = reverse_lazy("kitchen:dish_type-list")
 
+class DishTypeDetailView(LoginRequiredMixin, generic.DetailView):
+    model = DishType
+    template_name = "kitchen/dishtype_detail.html"
+    context_object_name = "dishtype"
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        dishes = Dish.objects.filter(dish_type=self.object).prefetch_related('chefs')
+        context['dishes'] = dishes
+        return context
+
 
 class DishListView(LoginRequiredMixin, generic.ListView):
     model = Dish
@@ -190,7 +201,7 @@ class DishDeleteView(LoginRequiredMixin, generic.DeleteView):
     success_url = reverse_lazy("kitchen:dish-list")
 
 
-class ChefListView(generic.ListView):
+class ChefListView(LoginRequiredMixin, generic.ListView):
     model = Chef
     template_name = "kitchen/chef_list.html"
     context_object_name = "chef_list"
@@ -236,7 +247,7 @@ class ChefListView(generic.ListView):
         return context
 
 
-class ChefDetailView(generic.DetailView):
+class ChefDetailView(LoginRequiredMixin, generic.DetailView):
 
     model = Chef
     queryset = Chef.objects.prefetch_related("dishes__dish_type").all()
@@ -264,7 +275,7 @@ class ChefUpdateView(LoginRequiredMixin, generic.UpdateView):
 
 
 
-class IngredientListView(generic.ListView):
+class IngredientListView(LoginRequiredMixin, generic.ListView):
     model = Ingredient
     template_name = "kitchen/ingredient_list.html"
     context_object_name = "ingredient_list"
@@ -308,27 +319,27 @@ class IngredientListView(generic.ListView):
         return context
 
 
-class IngredientCreateView(generic.CreateView):
+class IngredientCreateView(LoginRequiredMixin, generic.CreateView):
     model = Ingredient
     form_class = IngredientForm
     template_name = "kitchen/ingredient_form.html"
     success_url = reverse_lazy("kitchen:ingredient-list")
 
 
-class IngredientUpdateView(generic.UpdateView):
+class IngredientUpdateView(LoginRequiredMixin, generic.UpdateView):
     model = Ingredient
     form_class = IngredientForm
     template_name = "kitchen/ingredient_form.html"
     success_url = reverse_lazy("kitchen:ingredient-list")
 
 
-class IngredientDeleteView(generic.DeleteView):
+class IngredientDeleteView(LoginRequiredMixin, generic.DeleteView):
     model = Ingredient
     template_name = "kitchen/ingredient_confirm_delete.html"
     success_url = reverse_lazy("kitchen:ingredient-list")
 
 
-class IngredientTransactionListView(generic.ListView):
+class IngredientTransactionListView(LoginRequiredMixin, generic.ListView):
     model = IngredientTransaction
     template_name = "kitchen/ingredienttransaction_list.html"
     context_object_name = "transaction_list"
@@ -389,7 +400,7 @@ class IngredientTransactionListView(generic.ListView):
         return context
 
 
-class IngredientTransactionCreateView(generic.CreateView):
+class IngredientTransactionCreateView(LoginRequiredMixin, generic.CreateView):
     model = IngredientTransaction
     form_class = IngredientTransactionForm
     template_name = "kitchen/ingredienttransaction_form.html"
@@ -407,7 +418,7 @@ class IngredientTransactionCreateView(generic.CreateView):
         return form
 
 
-class IngredientWasteCreateView(View):
+class IngredientWasteCreateView(LoginRequiredMixin, View):
     template_name = "kitchen/ingredienttransaction_waste_form.html"
 
     def get(self, request, *args, **kwargs):
@@ -478,20 +489,20 @@ class IngredientWasteCreateView(View):
         )
 
 
-class IngredientTransactionUpdateView(generic.UpdateView):
+class IngredientTransactionUpdateView(LoginRequiredMixin, generic.UpdateView):
     model = IngredientTransaction
     form_class = IngredientTransactionForm
     template_name = "kitchen/ingredienttransaction_form.html"
     success_url = reverse_lazy("kitchen:ingredienttransaction-list")
 
 
-class IngredientTransactionDeleteView(generic.DeleteView):
+class IngredientTransactionDeleteView(LoginRequiredMixin, generic.DeleteView):
     model = IngredientTransaction
     template_name = "kitchen/ingredienttransaction_confirm_delete.html"
     success_url = reverse_lazy("kitchen:ingredienttransaction-list")
 
 
-class OrderListView(generic.ListView):
+class OrderListView(LoginRequiredMixin, generic.ListView):
     model = Order
     template_name = "kitchen/order_list.html"
     context_object_name = "order_list"
@@ -643,13 +654,13 @@ class OrderDetailView(LoginRequiredMixin, generic.DetailView):
     context_object_name = "order"
 
 
-class IngredientDetailView(generic.DetailView):
+class IngredientDetailView(LoginRequiredMixin, generic.DetailView):
     model = Ingredient
     template_name = "kitchen/ingredient_detail.html"
     context_object_name = "ingredient"
 
 
-class IngredientTransactionDetailView(generic.DetailView):
+class IngredientTransactionDetailView(LoginRequiredMixin, generic.DetailView):
     model = IngredientTransaction
     template_name = "kitchen/ingredienttransaction_detail.html"
     context_object_name = "transaction"

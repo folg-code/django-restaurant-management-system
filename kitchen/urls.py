@@ -15,7 +15,7 @@ from kitchen.views import (
     IngredientDetailView, IngredientTransactionDetailView,
     IngredientTransactionListView, IngredientTransactionCreateView,
     IngredientTransactionUpdateView, IngredientWasteCreateView,
-    IngredientTransactionDeleteView, OrderDetailView
+    IngredientTransactionDeleteView, OrderDetailView, DishTypeDetailView
 )
 
 
@@ -174,6 +174,9 @@ urlpatterns = [
          IngredientTransactionDetailView.as_view(),
          name="ingredienttransaction-detail"
          ),
+    path('dishtype/<int:pk>/',
+         DishTypeDetailView.as_view(),
+         name='dish_type-detail'),
     path("finance-dashboard/",
          finance_dashboard,
          name="finance_dashboard"
