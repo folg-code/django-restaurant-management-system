@@ -1,0 +1,128 @@
+{% extends 'layouts/base-presentation.html' %}
+{% load crispy_forms_filters %}
+
+{% block content %}
+<div class="container mt-8">
+  <div class="d-flex justify-content-between align-items-center mb-4">
+    <h1 class="mb-0">Ingredient Transactions</h1>
+    <a href="{% url 'kitchen:ingredienttransaction-create' %}" class="btn btn-primary link-to-page">Add Supply</a>
+  </div>
+
+  <form method="get" class="mb-3 d-flex gap-2">
+    {{ search_form.field }}
+    {{ search_form.query }}
+    <button type="submit" class="btn btn-primary">Search</button>
+  </form>
+
+  {% if transaction_list %}<table class="table table-striped">
+    <thead>
+    <tr>
+      <th>
+        {% if current_sort_field == 'id' %}
+          {% if current_sort_dir == 'asc' %}
+            <a href="?sort=id&dir=desc">ID &#9650;</a>
+          {% else %}
+            <a href="?sort=id&dir=asc">ID &#9660;</a>
+          {% endif %}
+        {% else %}
+          <a href="?sort=id&dir=asc">ID</a>
+        {% endif %}
+      </th>
+      <th>
+        {% if current_sort_field == 'ingredient' %}
+          {% if current_sort_dir == 'asc' %}
+            <a href="?sort=ingredient&dir=desc">Ingredient &#9650;</a>
+          {% else %}
+            <a href="?sort=ingredient&dir=asc">Ingredient &#9660;</a>
+          {% endif %}
+        {% else %}
+          <a href="?sort=ingredient&dir=asc">Ingredient</a>
+        {% endif %}
+      </th>
+      <th>
+        {% if current_sort_field == 'transaction_type' %}
+          {% if current_sort_dir == 'asc' %}
+            <a href="?sort=transaction_type&dir=desc">Type &#9650;</a>
+          {% else %}
+            <a href="?sort=transaction_type&dir=asc">Type &#9660;</a>
+          {% endif %}
+        {% else %}
+          <a href="?sort=transaction_type&dir=asc">Type</a>
+        {% endif %}
+      </th>
+      <th>
+        {% if current_sort_field == 'quantity' %}
+          {% if current_sort_dir == 'asc' %}
+            <a href="?sort=quantity&dir=desc">Quantity &#9650;</a>
+          {% else %}
+            <a href="?sort=quantity&dir=asc">Quantity &#9660;</a>
+          {% endif %}
+        {% else %}
+          <a href="?sort=quantity&dir=asc">Quantity</a>
+        {% endif %}
+      </th>
+      <th>
+        {% if current_sort_field == 'price_per_unit' %}
+          {% if current_sort_dir == 'asc' %}
+            <a href="?sort=price_per_unit&dir=desc">Price/Unit &#9650;</a>
+          {% else %}
+            <a href="?sort=price_per_unit&dir=asc">Price/Unit &#9660;</a>
+          {% endif %}
+        {% else %}
+          <a href="?sort=price_per_unit&dir=asc">Price/Unit</a>
+        {% endif %}
+      </th>
+      <th>
+        {% if current_sort_field == 'created_at' %}
+          {% if current_sort_dir == 'asc' %}
+            <a href="?sort=created_at&dir=desc">Created At &#9650;</a>
+          {% else %}
+            <a href="?sort=created_at&dir=asc">Created At &#9660;</a>
+          {% endif %}
+        {% else %}
+          <a href="?sort=created_at&dir=asc">Created At</a>
+        {% endif %}
+      </th>
+      <th>Expiration Date</th>
+      <th>Note</th>
+      <th>Actions</th>
+    </tr>
+    </thead>
+    <tbody>
+    {% for tx in transaction_list %}
+      <tr>
+        <td>
+          <a href="{% url 'kitchen:ingredienttransaction-detail' pk=tx.id %}">
+            {{ tx.id }}
+          </a>
+        </td>
+        <td>
+          <a href="{% url 'kitchen:ingredient-detail' pk=tx.ingredient.id %}">
+            {{ tx.ingredient.name }}
+          </a>
+        </td>
+        <td>{{ tx.transaction_type }}</td>
+        <td>{{ tx.quantity }}</td>
+        <td>{{ tx.price_per_unit }}</td>
+        <td>{{ tx.created_at }}</td>
+        <td>{{ tx.expiration_date }}</td>
+        <td>{{ tx.note }}</td>
+        <td>
+          {% if tx.transaction_type == tx.SUPPLY %}
+            <a href="{% url 'kitchen:ingredienttransaction-waste' pk=tx.id %}" class="btn btn-sm btn-primary link-to-page">Waste Supply</a>
+          {% endif %}
+          <a href="{% url 'kitchen:ingredienttransaction-update' pk=tx.id %}" class="btn btn-sm btn-primary">Update</a>
+          <a href="{% url 'kitchen:ingredienttransaction-delete' pk=tx.id %}" class="btn btn-sm btn-danger">Delete</a>
+        </td>
+      </tr>
+    {% endfor %}
+    </tbody>
+  </table>
+  <div class="pagination pagination-lg justify-content-center mt-4">
+    {% include "includes/pagination.html" %}
+  </div>
+  {% else %}
+    <p>No ingredient transactions found.</p>
+  {% endif %}
+</div>
+{% endblock %}

@@ -1,0 +1,25 @@
+{% extends 'layouts/base-presentation.html' %}
+
+{% block content %}
+<div class="container mt-8">
+  <h1>{{ transaction.transaction_type }} Transaction</h1>
+
+  <p><strong>Ingredient:</strong> 
+     <a href="{% url 'kitchen:ingredient-detail' pk=transaction.ingredient.id %}">
+        {{ transaction.ingredient.name }}
+     </a>
+  </p>
+  <p><strong>Quantity:</strong> {{ transaction.quantity }}</p>
+  <p><strong>Price per unit:</strong> {{ transaction.price_per_unit }}</p>
+  <p><strong>Created at:</strong> {{ transaction.created_at }}</p>
+  {% if transaction.expiration_date %}
+    <p><strong>Expiration date:</strong> {{ transaction.expiration_date }}</p>
+  {% endif %}
+  {% if transaction.note %}
+    <p><strong>Note:</strong> {{ transaction.note }}</p>
+  {% endif %}
+
+  <a href="{% url 'kitchen:ingredienttransaction-update' pk=transaction.id %}" class="btn btn-primary">Update</a>
+  <a href="{% url 'kitchen:ingredienttransaction-delete' pk=transaction.id %}" class="btn btn-danger">Delete</a>
+</div>
+{% endblock %}

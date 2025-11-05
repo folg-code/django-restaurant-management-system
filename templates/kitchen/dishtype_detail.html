@@ -1,0 +1,41 @@
+{% extends 'layouts/base-presentation.html' %}
+{% load crispy_forms_filters %}
+
+{% block content %}
+  <div class="container mt-8">
+    <h1>Dish Type: {{ dishtype.name }}</h1>
+
+    <h2>Dishes</h2>
+    <table class="table">
+      <thead>
+        <tr>
+          <th>Dish Name</th>
+          <th>Chefs</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for dish in dishes %}
+          <tr>
+            <td>{{ dish.name }}</td>
+            <td>
+              {% for chef in dish.chefs.all %}
+                <li>{{ chef.username }} ({{ chef.first_name }} {{ chef.last_name }})</li>
+              {% empty %}
+                <li>No chefs assigned.</li>
+              {% endfor %}
+            </td>
+          </tr>
+        {% empty %}
+          <tr><td colspan="2">No dishes for this type.</td></tr>
+        {% endfor %}
+      </tbody>
+    </table>
+     <a href="{% url 'kitchen:dish_type-update' pk=dishtype.pk %}" class="btn btn-primary">
+        Update
+      </a>
+    <a href="{% url 'kitchen:dish_type-delete' pk=dishtype.pk %}" class="btn btn-primary">
+      Delete
+    </a>
+      <a href="{% url 'kitchen:dish_type-list' %}" class="btn btn-secondary">⬅ Back to list</a>
+  </div>
+{% endblock %}

@@ -1,0 +1,45 @@
+{% extends 'layouts/base-presentation.html' %}
+
+{% block content %}
+<div class="container mt-8">
+  <h1>{{ ingredient.name }}</h1>
+  <p><strong>Unit:</strong> {{ ingredient.unit }}</p>
+  <p><strong>Stock amount:</strong> {{ ingredient.stock_amount }}</p>
+  <p><strong>Current price per unit:</strong> {{ ingredient.price_per_unit }}</p>
+
+  <a href="{% url 'kitchen:ingredient-update' pk=ingredient.id %}" class="btn btn-primary">Update</a>
+  <a href="{% url 'kitchen:ingredient-delete' pk=ingredient.id %}" class="btn btn-danger">Delete</a>
+
+  <h2 class="mt-5">Transactions</h2>
+  {% if ingredient.transactions.all %}
+    <table class="table table-striped">
+      <thead>
+        <tr>
+          <th>ID</th>
+          <th>Type</th>
+          <th>Quantity</th>
+          <th>Price per Unit</th>
+          <th>Created At</th>
+          <th>Expiration Date</th>
+          <th>Note</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for tx in ingredient.transactions.all %}
+        <tr>
+          <td>{{ tx.id }}</td>
+          <td>{{ tx.transaction_type }}</td>
+          <td>{{ tx.quantity }}</td>
+          <td>{{ tx.price_per_unit }}</td>
+          <td>{{ tx.created_at }}</td>
+          <td>{{ tx.expiration_date }}</td>
+          <td>{{ tx.note }}</td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  {% else %}
+    <p>No transactions for this ingredient.</p>
+  {% endif %}
+</div>
+{% endblock %}

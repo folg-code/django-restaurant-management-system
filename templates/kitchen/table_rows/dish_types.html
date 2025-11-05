@@ -1,0 +1,18 @@
+{% for dish_type in items %}
+  <tr class="hover:bg-gray-50">
+    <td class="border-b text-right tabular-nums">
+      {{ start_index|add:forloop.counter0 }}
+    </td>
+    <td class="border-b">
+      {{ dish_type.name }}
+    </td>
+
+  </tr>
+{% empty %}
+  <tr>
+    <td colspan="{{ headers|length }}" class="px-4 py-2 text-center text-gray-500">
+      No dish_types
+    </td>
+  </tr>
+{% endfor %}
+

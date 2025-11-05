@@ -1,0 +1,143 @@
+{% extends 'layouts/base-presentation.html' %}
+{% load crispy_forms_filters %}
+
+{% block content %}
+<div class="container mt-8">
+  {% if messages %}
+  <div class="mb-3">
+    {% for message in messages %}
+      <div class="alert alert-{{ message.tags }}">{{ message }}</div>
+    {% endfor %}
+  </div>
+  {% endif %}
+  <h1>{{ object|yesno:"Update,Create" }} Order</h1>
+
+  <form method="post" id="order-form">
+    {% csrf_token %}
+    {{ form|crispy }}
+
+    {{ items.management_form }}
+
+    <div id="order-items">
+      {% for item_form in items %}
+      <div class="form-row mb-2 order-item-form">
+        {{ item_form.dish.label_tag }} {{ item_form.dish }}
+        {{ item_form.quantity.label_tag }} {{ item_form.quantity }}
+        {% if item_form.DELETE %}
+          {{ item_form.DELETE }}
+        {% endif %}
+        <button type="button" class="btn btn-sm btn-danger remove-item">Remove</button>
+      </div>
+      {% endfor %}
+    </div>
+
+    <button type="button" id="add-item" class="btn btn-secondary mb-3">➕ Add another dish</button>
+    <input type="submit" class="btn btn-primary" value="Submit">
+  </form>
+
+  {# Hidden empty form template (uses __prefix__ placeholder) #}
+  <div id="empty-form-template" style="display:none;">
+    <div class="form-row mb-2 order-item-form">
+      {{ items.empty_form.dish.label_tag }} {{ items.empty_form.dish }}
+      {{ items.empty_form.quantity.label_tag }} {{ items.empty_form.quantity }}
+      {% if items.empty_form.DELETE %}
+        {{ items.empty_form.DELETE }}
+      {% endif %}
+      <button type="button" class="btn btn-sm btn-danger remove-item">Remove</button>
+    </div>
+  </div>
+
+  <script>
+  document.addEventListener('DOMContentLoaded', function () {
+    const formContainer = document.getElementById('order-items');
+    const addBtn = document.getElementById('add-item');
+    const emptyTemplate = document.getElementById('empty-form-template').innerHTML;
+    const totalFormsInput = document.querySelector('input[name$="-TOTAL_FORMS"]');
+
+    if (!totalFormsInput) {
+      console.error('Cannot find TOTAL_FORMS input for the formset.');
+      return;
+    }
+
+    const formPrefix = totalFormsInput.name.replace('-TOTAL_FORMS', '');
+
+    // Reindex all forms so names/ids/labels are contiguous (0..n-1)
+    function reindexForms() {
+      const forms = formContainer.querySelectorAll('.order-item-form');
+      const indexRegex = new RegExp(formPrefix + '-\\d+-', 'g');
+
+      forms.forEach((formEl, i) => {
+        // update all input/select/textarea name/id and label htmlFor
+        formEl.querySelectorAll('input, select, textarea, label').forEach(el => {
+          if (el.name) el.name = el.name.replace(indexRegex, `${formPrefix}-${i}-`);
+          if (el.id) el.id = el.id.replace(indexRegex, `${formPrefix}-${i}-`);
+          if (el.htmlFor) el.htmlFor = el.htmlFor.replace(indexRegex, `${formPrefix}-${i}-`);
+        });
+      });
+
+      // update management form
+      totalFormsInput.value = formContainer.querySelectorAll('.order-item-form:not([data-deleted="true"])').length;
+    }
+
+    // Attach remove handler to a form-row
+    function attachRemoveHandler(formEl) {
+      const btn = formEl.querySelector('.remove-item');
+      if (!btn) return;
+
+      btn.addEventListener('click', function (e) {
+        e.preventDefault();
+        const row = e.target.closest('.order-item-form');
+        // try to find an 'id' hidden input to decide if this form is existing instance
+        const idInput = row.querySelector(`input[name$="-id"]`);
+        if (idInput && idInput.value) {
+          // existing saved instance -> mark DELETE checkbox (if exists) and hide row
+          const deleteInput = row.querySelector(`input[name$="-DELETE"]`);
+          if (deleteInput) {
+            deleteInput.checked = true;
+            row.setAttribute('data-deleted', 'true');
+            row.style.display = 'none';
+            // do NOT change TOTAL_FORMS (Django expects same count), but you may want to call reindexForms()
+          } else {
+            // fallback: just hide and mark deleted attribute
+            row.setAttribute('data-deleted', 'true');
+            row.style.display = 'none';
+          }
+        } else {
+          // newly added form (no id) -> remove from DOM and reindex
+          row.remove();
+          reindexForms();
+        }
+      });
+    }
+
+    // Attach handlers to existing rows
+    formContainer.querySelectorAll('.order-item-form').forEach(formEl => {
+      attachRemoveHandler(formEl);
+    });
+
+    // Add new form
+    addBtn.addEventListener('click', function (e) {
+      e.preventDefault();
+      // current count (note: includes deleted-hidden ones; we'll reindex after append)
+      const currentCount = parseInt(totalFormsInput.value, 10);
+      // use empty template: replace __prefix__ with currentCount
+      let newHtml = emptyTemplate.replace(/__prefix__/g, currentCount);
+      // create node
+      const wrapper = document.createElement('div');
+      wrapper.innerHTML = newHtml;
+      const newForm = wrapper.firstElementChild;
+      formContainer.appendChild(newForm);
+      attachRemoveHandler(newForm);
+      reindexForms();
+      // clear values (just in case)
+      newForm.querySelectorAll('input, select, textarea').forEach(i => {
+        if (i.type === 'checkbox' || i.type === 'radio') i.checked = false;
+        else if (i.type !== 'hidden') i.value = '';
+      });
+    });
+
+  });
+  </script>
+
+</div>
+{% endblock %}
