@@ -666,7 +666,6 @@ class IngredientTransactionDetailView(LoginRequiredMixin, generic.DetailView):
 def finance_dashboard(request):
     fm = FinanceManager()
 
-    print("SUPPLY ON STOCK:", fm.supply_on_stock)
 
     context = {
         "supply_on_stock": fm.supply_on_stock,
