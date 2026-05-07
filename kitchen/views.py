@@ -448,7 +448,6 @@ class IngredientWasteCreateView(LoginRequiredMixin, View):
                       )
 
     def post(self, request, *args, **kwargs):
-        print("POST data:", request.POST)
         supply_transaction = get_object_or_404(
             IngredientTransaction,
             pk=kwargs['pk'],
