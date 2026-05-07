@@ -48,8 +48,6 @@ def index(request):
 
 
 class DishTypeListView(LoginRequiredMixin, generic.ListView):
-    print(DishType.objects.all())
-    print(DishType.objects.count())
     model = DishType
     template_name = "kitchen/dishtype_list.html"
     context_object_name = "dish_type_list"
@@ -450,7 +448,6 @@ class IngredientWasteCreateView(LoginRequiredMixin, View):
                       )
 
     def post(self, request, *args, **kwargs):
-        print("POST data:", request.POST)
         supply_transaction = get_object_or_404(
             IngredientTransaction,
             pk=kwargs['pk'],
