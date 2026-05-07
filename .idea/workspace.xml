@@ -1,0 +1,538 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="AutoImportSettings">
+    <option name="autoReloadType" value="SELECTIVE" />
+  </component>
+  <component name="ChangeListManager">
+    <list default="true" id="20772e77-485a-4177-acff-564a5f1bebd0" name="Changes" comment="">
+      <change beforePath="$PROJECT_DIR$/static/assets/.gitkeep" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/static/assets/css/nucleo-icons.css" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/static/assets/css/nucleo-svg.css" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/static/assets/css/soft-design-system.css" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/static/assets/css/soft-design-system.css.map" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/static/assets/css/soft-design-system.min.css" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/static/assets/fonts/nucleo-icons.eot" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/static/assets/fonts/nucleo-icons.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/static/assets/fonts/nucleo-icons.ttf" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/static/assets/fonts/nucleo-icons.woff" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/static/assets/fonts/nucleo-icons.woff2" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/static/assets/fonts/nucleo.eot" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/static/assets/fonts/nucleo.ttf" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/static/assets/fonts/nucleo.woff" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/static/assets/fonts/nucleo.woff2" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/static/assets/gulpfile.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/static/assets/img/anastasia.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/static/assets/img/annie-spratt.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/static/assets/img/apple-icon.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/static/assets/img/blog7-1.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/static/assets/img/blog7-2.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/static/assets/img/blog7-3.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/static/assets/img/brooke.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/static/assets/img/bruce-mars.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/static/assets/img/card-2.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/static/assets/img/card-3.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/static/assets/img/charles.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/static/assets/img/curved-images/curved-10.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/static/assets/img/curved-images/curved-11.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/static/assets/img/curved-images/curved-6.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/static/assets/img/curved-images/curved-8.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/static/assets/img/curved-images/curved.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/static/assets/img/curved-images/curved1.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/static/assets/img/curved-images/curved11-small.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/static/assets/img/curved-images/curved11.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/static/assets/img/curved-images/curved13.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/static/assets/img/curved-images/curved14.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/static/assets/img/curved-images/curved2.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/static/assets/img/curved-images/curved5-small.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/static/assets/img/curved-images/curved5.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/static/assets/img/curved-images/curved6-small.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/static/assets/img/curved-images/curved6.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/static/assets/img/curved-images/curved8.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/static/assets/img/down-arrow-dark.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/static/assets/img/down-arrow-white.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/static/assets/img/down-arrow.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/static/assets/img/favicon.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/static/assets/img/illustrations/chat.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/static/assets/img/illustrations/sign-up.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/static/assets/img/ivana-square.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/static/assets/img/ivana.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/static/assets/img/ivancik.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/static/assets/img/jordan.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/static/assets/img/kal-visuals-square.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/static/assets/img/kal-visuals.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/static/assets/img/logos/gray-logos/logo-apple.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/static/assets/img/logos/gray-logos/logo-behance.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/static/assets/img/logos/gray-logos/logo-coinbase.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/static/assets/img/logos/gray-logos/logo-digitalocean.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/static/assets/img/logos/gray-logos/logo-facebook.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/static/assets/img/logos/gray-logos/logo-nasa.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/static/assets/img/logos/gray-logos/logo-netflix.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/static/assets/img/logos/gray-logos/logo-pinterest.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/static/assets/img/logos/gray-logos/logo-spotify.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/static/assets/img/logos/gray-logos/logo-vodafone.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/static/assets/img/logos/medium-logos/logo-apple.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/static/assets/img/logos/medium-logos/logo-behance.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/static/assets/img/logos/medium-logos/logo-coinbase.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/static/assets/img/logos/medium-logos/logo-facebook.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/static/assets/img/logos/medium-logos/logo-google.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/static/assets/img/logos/medium-logos/logo-mailchimp.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/static/assets/img/logos/medium-logos/logo-nasa.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/static/assets/img/logos/medium-logos/logo-netflix.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/static/assets/img/logos/medium-logos/logo-pinterest.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/static/assets/img/logos/medium-logos/logo-spotify.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/static/assets/img/logos/small-logos/logo-apple.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/static/assets/img/logos/small-logos/logo-asana.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/static/assets/img/logos/small-logos/logo-atlassian.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/static/assets/img/logos/small-logos/logo-google-drive.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/static/assets/img/logos/small-logos/logo-invision.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/static/assets/img/logos/small-logos/logo-jira.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/static/assets/img/logos/small-logos/logo-shopify.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/static/assets/img/logos/small-logos/logo-slack.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/static/assets/img/logos/small-logos/logo-spotify.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/static/assets/img/logos/small-logos/logo-weave.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/static/assets/img/logos/small-logos/logo-webdev.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/static/assets/img/logos/small-logos/logo-xd.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/static/assets/img/logos/white-logos/logo-google-white.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/static/assets/img/logos/white-logos/logo-spotify-white.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/static/assets/img/marie.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/static/assets/img/meeting.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/static/assets/img/nastuh.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/static/assets/img/office-dark.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/static/assets/img/shapes/pattern-lines.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/static/assets/img/shapes/waves-gray.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/static/assets/img/shapes/waves-white.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/static/assets/img/team-1.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/static/assets/img/team-2.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/static/assets/img/team-3.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/static/assets/img/team-4.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/static/assets/img/toa-heftiba.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/static/assets/img/wave-1.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/static/assets/js/core/bootstrap.min.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/static/assets/js/core/popper.min.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/static/assets/js/plugins/choices.min.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/static/assets/js/plugins/countup.min.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/static/assets/js/plugins/flatpickr.min.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/static/assets/js/plugins/moment.min.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/static/assets/js/plugins/parallax.min.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/static/assets/js/plugins/perfect-scrollbar.min.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/static/assets/js/plugins/prism.min.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/static/assets/js/plugins/rellax.min.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/static/assets/js/plugins/tilt.min.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/static/assets/js/plugins/typedjs.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/static/assets/js/soft-design-system.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/static/assets/js/soft-design-system.min.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/static/assets/package.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/static/assets/scss/soft-design-system.scss" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/static/assets/scss/soft-design-system/_alert.scss" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/static/assets/scss/soft-design-system/_buttons.scss" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/static/assets/scss/soft-design-system/_cards.scss" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/static/assets/scss/soft-design-system/_dropdown.scss" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/static/assets/scss/soft-design-system/_footer.scss" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/static/assets/scss/soft-design-system/_gradients.scss" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/static/assets/scss/soft-design-system/_header.scss" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/static/assets/scss/soft-design-system/_info-areas.scss" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/static/assets/scss/soft-design-system/_misc.scss" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/static/assets/scss/soft-design-system/_nav.scss" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/static/assets/scss/soft-design-system/_navbar.scss" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/static/assets/scss/soft-design-system/_pagination.scss" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/static/assets/scss/soft-design-system/_popovers.scss" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/static/assets/scss/soft-design-system/_progress.scss" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/static/assets/scss/soft-design-system/_tooltips.scss" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/static/assets/scss/soft-design-system/_typography.scss" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/static/assets/scss/soft-design-system/_utilities.scss" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/static/assets/scss/soft-design-system/_variables.scss" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/static/assets/scss/soft-design-system/avatars/_avatar-group.scss" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/static/assets/scss/soft-design-system/avatars/_avatar.scss" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/static/assets/scss/soft-design-system/bootstrap/_accordion.scss" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/static/assets/scss/soft-design-system/bootstrap/_alert.scss" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/static/assets/scss/soft-design-system/bootstrap/_badge.scss" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/static/assets/scss/soft-design-system/bootstrap/_breadcrumb.scss" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/static/assets/scss/soft-design-system/bootstrap/_button-group.scss" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/static/assets/scss/soft-design-system/bootstrap/_buttons.scss" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/static/assets/scss/soft-design-system/bootstrap/_card.scss" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/static/assets/scss/soft-design-system/bootstrap/_carousel.scss" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/static/assets/scss/soft-design-system/bootstrap/_close.scss" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/static/assets/scss/soft-design-system/bootstrap/_containers.scss" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/static/assets/scss/soft-design-system/bootstrap/_dropdown.scss" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/static/assets/scss/soft-design-system/bootstrap/_forms.scss" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/static/assets/scss/soft-design-system/bootstrap/_functions.scss" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/static/assets/scss/soft-design-system/bootstrap/_grid.scss" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/static/assets/scss/soft-design-system/bootstrap/_helpers.scss" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/static/assets/scss/soft-design-system/bootstrap/_images.scss" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/static/assets/scss/soft-design-system/bootstrap/_list-group.scss" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/static/assets/scss/soft-design-system/bootstrap/_mixins.scss" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/static/assets/scss/soft-design-system/bootstrap/_modal.scss" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/static/assets/scss/soft-design-system/bootstrap/_nav.scss" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/static/assets/scss/soft-design-system/bootstrap/_navbar.scss" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/static/assets/scss/soft-design-system/bootstrap/_pagination.scss" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/static/assets/scss/soft-design-system/bootstrap/_popover.scss" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/static/assets/scss/soft-design-system/bootstrap/_progress.scss" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/static/assets/scss/soft-design-system/bootstrap/_reboot.scss" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/static/assets/scss/soft-design-system/bootstrap/_root.scss" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/static/assets/scss/soft-design-system/bootstrap/_spinners.scss" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/static/assets/scss/soft-design-system/bootstrap/_tables.scss" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/static/assets/scss/soft-design-system/bootstrap/_toasts.scss" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/static/assets/scss/soft-design-system/bootstrap/_tooltip.scss" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/static/assets/scss/soft-design-system/bootstrap/_transitions.scss" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/static/assets/scss/soft-design-system/bootstrap/_type.scss" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/static/assets/scss/soft-design-system/bootstrap/_utilities.scss" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/static/assets/scss/soft-design-system/bootstrap/_variables.scss" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/static/assets/scss/soft-design-system/bootstrap/bootstrap-grid.scss" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/static/assets/scss/soft-design-system/bootstrap/bootstrap-reboot.scss" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/static/assets/scss/soft-design-system/bootstrap/bootstrap-utilities.scss" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/static/assets/scss/soft-design-system/bootstrap/bootstrap.scss" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/static/assets/scss/soft-design-system/bootstrap/forms/_floating-labels.scss" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/static/assets/scss/soft-design-system/bootstrap/forms/_form-check.scss" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/static/assets/scss/soft-design-system/bootstrap/forms/_form-control.scss" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/static/assets/scss/soft-design-system/bootstrap/forms/_form-range.scss" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/static/assets/scss/soft-design-system/bootstrap/forms/_form-select.scss" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/static/assets/scss/soft-design-system/bootstrap/forms/_form-text.scss" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/static/assets/scss/soft-design-system/bootstrap/forms/_input-group.scss" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/static/assets/scss/soft-design-system/bootstrap/forms/_labels.scss" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/static/assets/scss/soft-design-system/bootstrap/forms/_validation.scss" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/static/assets/scss/soft-design-system/bootstrap/helpers/_clearfix.scss" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/static/assets/scss/soft-design-system/bootstrap/helpers/_colored-links.scss" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/static/assets/scss/soft-design-system/bootstrap/helpers/_position.scss" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/static/assets/scss/soft-design-system/bootstrap/helpers/_ratio.scss" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/static/assets/scss/soft-design-system/bootstrap/helpers/_stretched-link.scss" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/static/assets/scss/soft-design-system/bootstrap/helpers/_text-truncation.scss" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/static/assets/scss/soft-design-system/bootstrap/helpers/_visually-hidden.scss" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/static/assets/scss/soft-design-system/bootstrap/mixins/_alert.scss" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/static/assets/scss/soft-design-system/bootstrap/mixins/_border-radius.scss" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/static/assets/scss/soft-design-system/bootstrap/mixins/_box-shadow.scss" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/static/assets/scss/soft-design-system/bootstrap/mixins/_breakpoints.scss" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/static/assets/scss/soft-design-system/bootstrap/mixins/_buttons.scss" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/static/assets/scss/soft-design-system/bootstrap/mixins/_caret.scss" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/static/assets/scss/soft-design-system/bootstrap/mixins/_clearfix.scss" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/static/assets/scss/soft-design-system/bootstrap/mixins/_container.scss" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/static/assets/scss/soft-design-system/bootstrap/mixins/_deprecate.scss" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/static/assets/scss/soft-design-system/bootstrap/mixins/_forms.scss" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/static/assets/scss/soft-design-system/bootstrap/mixins/_gradients.scss" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/static/assets/scss/soft-design-system/bootstrap/mixins/_grid.scss" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/static/assets/scss/soft-design-system/bootstrap/mixins/_image.scss" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/static/assets/scss/soft-design-system/bootstrap/mixins/_list-group.scss" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/static/assets/scss/soft-design-system/bootstrap/mixins/_lists.scss" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/static/assets/scss/soft-design-system/bootstrap/mixins/_pagination.scss" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/static/assets/scss/soft-design-system/bootstrap/mixins/_reset-text.scss" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/static/assets/scss/soft-design-system/bootstrap/mixins/_resize.scss" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/static/assets/scss/soft-design-system/bootstrap/mixins/_table-variants.scss" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/static/assets/scss/soft-design-system/bootstrap/mixins/_text-truncate.scss" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/static/assets/scss/soft-design-system/bootstrap/mixins/_transition.scss" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/static/assets/scss/soft-design-system/bootstrap/mixins/_utilities.scss" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/static/assets/scss/soft-design-system/bootstrap/mixins/_visually-hidden.scss" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/static/assets/scss/soft-design-system/bootstrap/utilities/_api.scss" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/static/assets/scss/soft-design-system/bootstrap/vendor/_rfs.scss" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/static/assets/scss/soft-design-system/cards/card-background.scss" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/static/assets/scss/soft-design-system/custom/_styles.scss" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/static/assets/scss/soft-design-system/custom/_variables.scss" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/static/assets/scss/soft-design-system/forms/_form-check.scss" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/static/assets/scss/soft-design-system/forms/_form-select.scss" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/static/assets/scss/soft-design-system/forms/_form-switch.scss" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/static/assets/scss/soft-design-system/forms/_forms.scss" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/static/assets/scss/soft-design-system/forms/_input-group.scss" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/static/assets/scss/soft-design-system/forms/_inputs.scss" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/static/assets/scss/soft-design-system/forms/_labels.scss" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/static/assets/scss/soft-design-system/mixins/_hover.scss" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/static/assets/scss/soft-design-system/mixins/mixins.scss" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/static/assets/scss/soft-design-system/theme.scss" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/static/assets/scss/soft-design-system/variables/_animations.scss" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/static/assets/scss/soft-design-system/variables/_avatars.scss" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/static/assets/scss/soft-design-system/variables/_cards.scss" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/static/assets/scss/soft-design-system/variables/_choices.scss" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/static/assets/scss/soft-design-system/variables/_dropdowns.scss" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/static/assets/scss/soft-design-system/variables/_form-switch.scss" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/static/assets/scss/soft-design-system/variables/_header.scss" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/static/assets/scss/soft-design-system/variables/_info-areas.scss" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/static/assets/scss/soft-design-system/variables/_misc.scss" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/static/assets/scss/soft-design-system/variables/_navbar.scss" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/static/assets/scss/soft-design-system/variables/_pagination.scss" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/static/assets/scss/soft-design-system/variables/_utilities.scss" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/static/assets/scss/soft-design-system/vendor/_choices.scss" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/static/assets/scss/soft-design-system/vendor/_flatpickr.scss" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/static/assets/scss/soft-design-system/vendor/_nouislider.scss" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/static/assets/scss/soft-design-system/vendor/_prism.scss" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/static/assets/scss/soft-design-system/vendor/plugins.scss" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/static/favicon.ico" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/static/sitemap.xml" beforeDir="false" />
+    </list>
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="DjangoConsoleOptions" custom-start-script="import sys; print('Python %s on %s' % (sys.version, sys.platform))&#10;import django; print('Django %s' % django.get_version())&#10;sys.path.extend([WORKING_DIR_AND_PYTHON_PATHS])&#10;if 'setup' in dir(django): django.setup()&#10;import django_manage_shell; django_manage_shell.run(PROJECT_ROOT)">
+    <option name="myCustomStartScript" value="import sys; print('Python %s on %s' % (sys.version, sys.platform))&#10;import django; print('Django %s' % django.get_version())&#10;sys.path.extend([WORKING_DIR_AND_PYTHON_PATHS])&#10;if 'setup' in dir(django): django.setup()&#10;import django_manage_shell; django_manage_shell.run(PROJECT_ROOT)" />
+  </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="Python Script" />
+        <option value="HTML File" />
+      </list>
+    </option>
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="GitHubPullRequestSearchHistory">{
+  &quot;lastFilter&quot;: {
+    &quot;state&quot;: &quot;OPEN&quot;,
+    &quot;assignee&quot;: &quot;folg-code&quot;
+  }
+}</component>
+  <component name="GithubPullRequestsUISettings">{
+  &quot;selectedUrlAndAccountId&quot;: {
+    &quot;url&quot;: &quot;https://github.com/folg-code/restaurant-manager.git&quot;,
+    &quot;accountId&quot;: &quot;93643a90-c00b-4372-a40f-21acf21963cb&quot;
+  }
+}</component>
+  <component name="ProjectColorInfo">{
+  &quot;associatedIndex&quot;: 2
+}</component>
+  <component name="ProjectId" id="3330vieEpdTSLdLEVGzNnUWVVUd" />
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;ASKED_MARK_IGNORED_FILES_AS_EXCLUDED&quot;: &quot;true&quot;,
+    &quot;DefaultHtmlFileTemplate&quot;: &quot;HTML File&quot;,
+    &quot;Django tests.Test: tests.executor&quot;: &quot;Run&quot;,
+    &quot;Django tests.Test: tests.test_forms.executor&quot;: &quot;Run&quot;,
+    &quot;Django tests.Test: tests.test_views.OrderViewsTest.test_order_create_view.executor&quot;: &quot;Run&quot;,
+    &quot;Django tests.Test: tests.test_views.executor&quot;: &quot;Run&quot;,
+    &quot;ModuleVcsDetector.initialDetectionPerformed&quot;: &quot;true&quot;,
+    &quot;Python.test_forms.executor&quot;: &quot;Run&quot;,
+    &quot;Python.views.executor&quot;: &quot;Run&quot;,
+    &quot;RunOnceActivity.OpenDjangoStructureViewOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.git.unshallow&quot;: &quot;true&quot;,
+    &quot;django.template.preview.state&quot;: &quot;SHOW_EDITOR&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;develop&quot;,
+    &quot;last_opened_file_path&quot;: &quot;C:/Users/Folga/PycharmProjects/restaurant-manager/templates&quot;,
+    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
+    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
+    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
+    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
+    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
+    &quot;settings.editor.selected.configurable&quot;: &quot;preferences.sourceCode.HTML&quot;,
+    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
+  }
+}</component>
+  <component name="RecentsManager">
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="C:\Users\Folga\PycharmProjects\restaurant-manager\templates" />
+      <recent name="C:\Users\Folga\PycharmProjects\restaurant-manager\.venv" />
+    </key>
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="C:\Users\Folga\PycharmProjects\restaurant-manager" />
+      <recent name="C:\Users\Folga\PycharmProjects\restaurant-manager\templates" />
+      <recent name="C:\Users\Folga\PycharmProjects\restaurant-manager\kitchen" />
+      <recent name="C:\Users\Folga\PycharmProjects\restaurant-manager\static" />
+      <recent name="C:\Users\Folga\PycharmProjects\restaurant-manager\templates\includes" />
+    </key>
+  </component>
+  <component name="RunManager" selected="Python.views">
+    <configuration name="Test: tests" type="DjangoTestsConfigurationType" temporary="true">
+      <module name="restaurant-manager" />
+      <option name="ENV_FILES" value="" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="" />
+      <option name="IS_MODULE_SDK" value="true" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <EXTENSION ID="PythonCoverageRunConfigurationExtension" runner="coverage.py" />
+      <option name="TARGET" value="tests" />
+      <option name="SETTINGS_FILE" value="" />
+      <option name="CUSTOM_SETTINGS" value="false" />
+      <option name="USE_OPTIONS" value="false" />
+      <option name="OPTIONS" value="" />
+      <method v="2" />
+    </configuration>
+    <configuration name="Test: tests.test_forms" type="DjangoTestsConfigurationType" temporary="true">
+      <module name="restaurant-manager" />
+      <option name="ENV_FILES" value="" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="" />
+      <option name="IS_MODULE_SDK" value="true" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <EXTENSION ID="PythonCoverageRunConfigurationExtension" runner="coverage.py" />
+      <option name="TARGET" value="tests.test_forms" />
+      <option name="SETTINGS_FILE" value="" />
+      <option name="CUSTOM_SETTINGS" value="false" />
+      <option name="USE_OPTIONS" value="false" />
+      <option name="OPTIONS" value="" />
+      <method v="2" />
+    </configuration>
+    <configuration name="Test: tests.test_views.OrderViewsTest.test_order_create_view" type="DjangoTestsConfigurationType" temporary="true">
+      <module name="restaurant-manager" />
+      <option name="ENV_FILES" value="" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="" />
+      <option name="IS_MODULE_SDK" value="true" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <EXTENSION ID="PythonCoverageRunConfigurationExtension" runner="coverage.py" />
+      <option name="TARGET" value="tests.test_views.OrderViewsTest.test_order_create_view" />
+      <option name="SETTINGS_FILE" value="" />
+      <option name="CUSTOM_SETTINGS" value="false" />
+      <option name="USE_OPTIONS" value="false" />
+      <option name="OPTIONS" value="" />
+      <method v="2" />
+    </configuration>
+    <configuration name="Test: tests.test_views" type="DjangoTestsConfigurationType" temporary="true">
+      <module name="restaurant-manager" />
+      <option name="ENV_FILES" value="" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="" />
+      <option name="IS_MODULE_SDK" value="true" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <EXTENSION ID="PythonCoverageRunConfigurationExtension" runner="coverage.py" />
+      <option name="TARGET" value="tests.test_views" />
+      <option name="SETTINGS_FILE" value="" />
+      <option name="CUSTOM_SETTINGS" value="false" />
+      <option name="USE_OPTIONS" value="false" />
+      <option name="OPTIONS" value="" />
+      <method v="2" />
+    </configuration>
+    <configuration name="views" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
+      <module name="restaurant-manager" />
+      <option name="ENV_FILES" value="" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/kitchen" />
+      <option name="IS_MODULE_SDK" value="true" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <EXTENSION ID="PythonCoverageRunConfigurationExtension" runner="coverage.py" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/kitchen/views.py" />
+      <option name="PARAMETERS" value="" />
+      <option name="SHOW_COMMAND_LINE" value="false" />
+      <option name="EMULATE_TERMINAL" value="false" />
+      <option name="MODULE_MODE" value="false" />
+      <option name="REDIRECT_INPUT" value="false" />
+      <option name="INPUT_FILE" value="" />
+      <method v="2" />
+    </configuration>
+    <configuration name="restaurant-manager" type="Python.DjangoServer" factoryName="Django server">
+      <module name="restaurant-manager" />
+      <option name="ENV_FILES" value="" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="" />
+      <option name="IS_MODULE_SDK" value="false" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <option name="launchJavascriptDebuger" value="false" />
+      <option name="port" value="8000" />
+      <option name="host" value="" />
+      <option name="additionalOptions" value="" />
+      <option name="browserUrl" value="" />
+      <option name="runTestServer" value="false" />
+      <option name="runNoReload" value="false" />
+      <option name="useCustomRunCommand" value="false" />
+      <option name="customRunCommand" value="" />
+      <method v="2" />
+    </configuration>
+    <recent_temporary>
+      <list>
+        <item itemvalue="Python.views" />
+      </list>
+    </recent_temporary>
+  </component>
+  <component name="SharedIndexes">
+    <attachedChunks>
+      <set>
+        <option value="bundled-python-sdk-890ed5b35930-d9c5bdb153f4-com.jetbrains.pycharm.pro.sharedIndexes.bundled-PY-251.23774.444" />
+      </set>
+    </attachedChunks>
+  </component>
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="20772e77-485a-4177-acff-564a5f1bebd0" name="Changes" comment="" />
+      <created>1758530681149</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1758530681149</updated>
+      <workItem from="1758530682217" duration="2176000" />
+      <workItem from="1758699887477" duration="5593000" />
+      <workItem from="1758705628203" duration="91214000" />
+      <workItem from="1763554564820" duration="4081000" />
+      <workItem from="1769440294312" duration="145000" />
+    </task>
+    <servers />
+  </component>
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="3" />
+  </component>
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="OPEN_GENERIC_TABS">
+      <map>
+        <entry key="d1927ba4-8d9e-4d02-a38c-c029da6c657f" value="TOOL_WINDOW" />
+      </map>
+    </option>
+    <option name="TAB_STATES">
+      <map>
+        <entry key="MAIN">
+          <value>
+            <State />
+          </value>
+        </entry>
+        <entry key="d1927ba4-8d9e-4d02-a38c-c029da6c657f">
+          <value>
+            <State />
+          </value>
+        </entry>
+      </map>
+    </option>
+  </component>
+  <component name="XDebuggerManager">
+    <breakpoint-manager>
+      <breakpoints>
+        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
+          <url>file://$PROJECT_DIR$/kitchen/models.py</url>
+          <option name="timeStamp" value="1" />
+        </line-breakpoint>
+      </breakpoints>
+    </breakpoint-manager>
+  </component>
+  <component name="com.intellij.coverage.CoverageDataManagerImpl">
+    <SUITE FILE_PATH="coverage/restaurant_manager$Test__tests.coverage" NAME="Test: tests Coverage Results" MODIFIED="1759135499169" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="" />
+    <SUITE FILE_PATH="coverage/restaurant_manager$views.coverage" NAME="views Coverage Results" MODIFIED="1759132562778" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/kitchen" />
+    <SUITE FILE_PATH="coverage/restaurant_manager$Test__tests_test_views_OrderViewsTest_test_order_create_view.coverage" NAME="Test: tests.test_views.OrderViewsTest.test_order_create_view Coverage Results" MODIFIED="1759133883881" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="" />
+    <SUITE FILE_PATH="coverage/restaurant_manager$test_forms.coverage" NAME="test_forms Coverage Results" MODIFIED="1759130644450" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/tests" />
+    <SUITE FILE_PATH="coverage/restaurant_manager$Test__tests_test_views.coverage" NAME="Test: tests.test_views Coverage Results" MODIFIED="1759135478842" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="" />
+    <SUITE FILE_PATH="coverage/restaurant_manager$Test__tests_test_forms.coverage" NAME="Test: tests.test_forms Coverage Results" MODIFIED="1759132466679" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="" />
+  </component>
+</project>
