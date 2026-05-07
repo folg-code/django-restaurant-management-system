@@ -1,5 +1,6 @@
 # Core framework
 Django>=4.2,<5.0
+gunicorn
 
 #Styles and linting
 flake8==5.0.4
